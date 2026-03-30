@@ -238,20 +238,20 @@
     root.innerHTML = `
       <div class="ca-panel">
         <div class="ca-header">
-          <div class="ca-title">Analyse financiere preliminaire</div>
+          <div class="ca-title">Analyse financière préliminaire</div>
           <button class="ca-close" type="button" aria-label="Fermer">x</button>
         </div>
         <div class="ca-content">
           <table>
             <thead><tr><th colspan="2">Resume</th></tr></thead>
             <tbody>
-              ${buildRow("No Centris", data.listingId)}
+              ${buildRow("N° Centris", data.listingId)}
               ${buildRow("Type", data.title || "-")}
               ${buildRow("Adresse", data.address || "-")}
-              ${buildRow("Prix demande", formatMoney(data.askingPrice))}
+              ${buildRow("Prix demandé", formatMoney(data.askingPrice))}
               ${buildRow("Usage", data.usageText || "-")}
-              ${buildRow("Nombre d unites", data.unitsText || "-")}
-              ${buildRow("Unites residentielles", data.unitsResText || "-")}
+              ${buildRow("Nombre d'unités", data.unitsText || "-")}
+              ${buildRow("Unités résidentielles", data.unitsResText || "-")}
               ${buildRow("Revenus bruts potentiels", Number.isFinite(data.grossPotential) ? formatMoney(data.grossPotential) : "-")}
             </tbody>
           </table>
@@ -260,9 +260,9 @@
             <thead><tr><th colspan="2">Calculs</th></tr></thead>
             <tbody>
               ${buildRow("Taxes annuelles", Number.isFinite(data.taxes) ? formatMoney(data.taxes) : "-")}
-              ${buildRow("Depenses annuelles", Number.isFinite(data.operatingExpenses) ? formatMoney(data.operatingExpenses) : "-")}
+              ${buildRow("Dépenses annuelles", Number.isFinite(data.operatingExpenses) ? formatMoney(data.operatingExpenses) : "-")}
               ${buildRow("Normalisation SCHL (est.)", Number.isFinite(analysis.schlNorm) ? formatMoney(analysis.schlNorm) : "-")}
-              ${buildRow("Revenu net normalise", Number.isFinite(analysis.netIncome) ? formatMoney(analysis.netIncome) : "-")}
+              ${buildRow("Revenu net normalisé", Number.isFinite(analysis.netIncome) ? formatMoney(analysis.netIncome) : "-")}
               ${buildRow("MRB", formatNumber(analysis.mrb, 2))}
               ${buildRow("MRN", formatNumber(analysis.mrn, 2))}
               ${buildRow("TGA", Number.isFinite(analysis.tga) ? `${formatNumber(analysis.tga, 2)} %` : "-")}
@@ -272,7 +272,7 @@
           ${sectionsHtml}
 
           <div class="ca-note">
-            Hypothese SCHL v0: vacance ${SCHL_DEFAULTS.vacancePct} %, gestion ${SCHL_DEFAULTS.gestionPct} %, entretien ${SCHL_DEFAULTS.entretienPct} %, remplacement ${SCHL_DEFAULTS.remplacementPct} % du revenu brut.
+            Hypothèse SCHL v0 : vacance ${SCHL_DEFAULTS.vacancePct} %, gestion ${SCHL_DEFAULTS.gestionPct} %, entretien ${SCHL_DEFAULTS.entretienPct} %, remplacement ${SCHL_DEFAULTS.remplacementPct} % du revenu brut.
           </div>
         </div>
       </div>
