@@ -1,0 +1,943 @@
+(function(){"use strict";try{if(typeof document!="undefined"){var t=document.createElement("style");t.appendChild(document.createTextNode(".oboxads{display:table;text-align:center;margin:auto}.oboxads-oop{position:absolute;top:-999px}.oboxads-content{width:100%;display:flex;align-items:center;flex-direction:column}.oboxads-content>div{width:100%}.single .content-ad{padding-left:0;padding-right:0}.oboxads-disabled{padding:0}body.single article.main-post div.entry-content .content-ad div.oboxads.oboxads-content iframe,.oboxads.oboxads-content iframe:not(body.single .content-ad div.oboxads.oboxads-content){margin:0 auto!important}.obox-s2n{overflow:hidden;margin-bottom:10px}.in-article-container .content-native{float:left}.oboxads-teads .oboxads-inserted-ad,.oboxads-connatix .oboxads-inserted-ad,.oboxads-multiplex{width:100%}@media(max-width:779px){.native-bottom-block .bottom-content-native:nth-of-type(2){display:none}}@media print{.oboxads,.impactify-style-impact,div[id^=ad_is_],.st-adunit{display:none!important}}")),document.head.appendChild(t)}}catch(o){console.error("vite-plugin-css-injected-by-js",o)}})();
+(function() {
+  var I, O;
+  const registerCommand = (e, t = {}) => {
+    commands[e] = t;
+  }, desktopSize = [768, 0], tabletSize = [576, 0], mobileMediumSize = [320, 0], mobileSize = [0, 0], values = {
+    iab: {
+      sellersJson: {
+        sellerId: 1201
+      }
+    },
+    monitorElement: !1,
+    site: "centris.ca",
+    lang: "fr",
+    resolutions: {
+      desktopSize: [1024, 491],
+      tabletSize: [768, 390],
+      mobileSize: [0, 0]
+    },
+    providers: {
+      googleAdManager: {
+        netId: "139271940",
+        childNetId: "23325531695",
+        implementation: "obox",
+        loadGpt: !1,
+        splitAdUnits: !0,
+        parentAdUnit: "centris_site",
+        baseAdUnit: "centris_site"
+      },
+      testBanners: {
+        multiLang: !0,
+        bannerPool: "centris/centris-achat"
+      }
+    },
+    services: {
+      firstPartyData: {
+        experimentMode: !0,
+        activeSegments: [],
+        iabV1: [],
+        iabV2_2: []
+      },
+      geoEdge: {
+        policyKey: "3efd04ca-c47d-416b-aaa0-152b16095968"
+      },
+      adRefresh: {
+        pageVisibilityEvent: !0,
+        providers: [
+          "googleAdManager"
+        ]
+      }
+    },
+    slotSettings: {
+      header: {
+        defaultSizes: [[728, 90]],
+        mapping: [
+          { resolution: desktopSize, sizes: [[728, 90]] },
+          { resolution: tabletSize, sizes: [[320, 50]] },
+          { resolution: mobileMediumSize, sizes: [[320, 50]] },
+          { resolution: mobileSize, sizes: [[320, 50]] }
+        ]
+      },
+      content: {
+        defaultSizes: [[728, 90]],
+        mapping: [
+          { resolution: desktopSize, sizes: [[728, 90]] },
+          { resolution: tabletSize, sizes: [[300, 250]] },
+          { resolution: mobileMediumSize, sizes: [[300, 250]] },
+          { resolution: mobileSize, sizes: [[300, 250]] }
+        ]
+      },
+      listing: {
+        defaultSizes: [[728, 90]],
+        mapping: [
+          { resolution: [992, 0], sizes: [[728, 90]] },
+          { resolution: tabletSize, sizes: [[320, 50]] },
+          { resolution: mobileMediumSize, sizes: [[300, 250]] },
+          { resolution: mobileSize, sizes: [[300, 250]] }
+        ]
+      },
+      property: {
+        defaultSizes: [[728, 90]],
+        mapping: [
+          { resolution: [790, 0], sizes: [[728, 90]] },
+          { resolution: tabletSize, sizes: [[320, 50]] },
+          { resolution: mobileMediumSize, sizes: [[300, 250]] },
+          { resolution: mobileSize, sizes: [[300, 250]] }
+        ]
+      },
+      "map-content": {
+        defaultSizes: [[728, 90]],
+        mapping: [
+          { resolution: [790, 0], sizes: [[728, 90]] },
+          { resolution: tabletSize, sizes: [[320, 50]] },
+          { resolution: mobileMediumSize, sizes: [[300, 250]] },
+          { resolution: mobileSize, sizes: [[300, 250]] }
+        ]
+      },
+      side: {
+        defaultSizes: [[300, 250]],
+        mapping: [
+          { resolution: desktopSize, sizes: [[160, 600]] },
+          { resolution: tabletSize, sizes: [[300, 250]] },
+          { resolution: mobileSize, sizes: [[300, 250]] }
+        ]
+      },
+      footer: {
+        defaultSizes: [[728, 90]],
+        mapping: [
+          { resolution: desktopSize, sizes: [[728, 90]] },
+          { resolution: tabletSize, sizes: [[728, 90]] },
+          { resolution: mobileMediumSize, sizes: [[320, 50]] },
+          { resolution: mobileSize, sizes: [[300, 250]] }
+        ]
+      },
+      oop: {
+        defaultSizes: [[300, 250]],
+        mapping: [
+          { resolution: desktopSize, sizes: [[1, 1]] },
+          { resolution: tabletSize, sizes: [[1, 1]] },
+          { resolution: mobileSize, sizes: [[1, 1]] }
+        ]
+      }
+    }
+  }, setValue = (e, t) => {
+    let s = values;
+    e = e.split("."), e.forEach((n, i, o) => {
+      i === o.length - 1 ? s[n] = t : (s.hasOwnProperty(n) || (s[n] = {}), s = s[n]);
+    });
+  };
+  let script = null;
+  const loadScript = (e, t, s = {}) => {
+    script === null && (script = document.getElementsByTagName("script")[0]);
+    const n = e.split("?")[0].substr(-4) === ".css" ? "link" : "script", i = document.createElement(n);
+    n === "link" ? (i.rel = "stylesheet", i.type = "text/css", i.href = e) : (i.src = e, values.hasOwnProperty("loadScript") && values.loadScript.hasOwnProperty("attr") && Object.keys(values.loadScript.attr).forEach((o) => {
+      let a = !0;
+      if (values.loadScript.whitelist)
+        for (let l = 0; l < values.loadScript.whitelist.length; l++)
+          e.includes(values.loadScript.whitelist[l]) && (a = !1);
+      a && i.setAttribute(o, values.loadScript.attr[o]);
+    }), s && Object.keys(s).forEach((o) => {
+      i.setAttribute(o, s[o]);
+    })), t && i.addEventListener("load", t), script.parentNode.insertBefore(i, script);
+  }, nextTick = (e) => {
+    window.setTimeout(e, 0);
+  }, merge = (e, t) => {
+    for (var s in t)
+      e.hasOwnProperty(s) || (e[s] = t[s]);
+    return e;
+  };
+  let urlParams$1 = null;
+  const getUrlParams = () => (urlParams$1 === null && (urlParams$1 = {}, location.search.substr(1).split("&").forEach((e) => {
+    const t = e.split("=");
+    urlParams$1[t[0]] = t.length > 1 ? decodeURIComponent(t[1].replace(/\+/g, " ")) : void 0;
+  })), urlParams$1);
+  class Sha1 {
+    /**
+     * Generates SHA-1 hash of string.
+     *
+     * @param   {string} msg - (Unicode) string to be hashed.
+     * @param   {Object} [options]
+     * @param   {string} [options.msgFormat=string] - Message format: 'string' for JavaScript string
+     *   (gets converted to UTF-8 for hashing); 'hex-bytes' for string of hex bytes ('616263' ≡ 'abc') .
+     * @param   {string} [options.outFormat=hex] - Output format: 'hex' for string of contiguous
+     *   hex bytes; 'hex-w' for grouping hex bytes into groups of (4 byte / 8 character) words.
+     * @returns {string} Hash of msg as hex character string.
+     */
+    static hash(t, s = { msgFormat: "string", outFormat: "hex" }) {
+      switch (s.msgFormat) {
+        default:
+        // default is to convert string to UTF-8, as SHA only deals with byte-streams
+        case "string":
+          t = m(t);
+          break;
+        case "hex-bytes":
+          t = P(t);
+          break;
+      }
+      const n = [1518500249, 1859775393, 2400959708, 3395469782], i = [1732584193, 4023233417, 2562383102, 271733878, 3285377520];
+      t += "";
+      const o = t.length / 4 + 2, a = Math.ceil(o / 16), l = new Array(a);
+      for (let d = 0; d < a; d++) {
+        l[d] = new Array(16);
+        for (let c = 0; c < 16; c++)
+          l[d][c] = t.charCodeAt(d * 64 + c * 4 + 0) << 24 | t.charCodeAt(d * 64 + c * 4 + 1) << 16 | t.charCodeAt(d * 64 + c * 4 + 2) << 8 | t.charCodeAt(d * 64 + c * 4 + 3) << 0;
+      }
+      l[a - 1][14] = (t.length - 1) * 8 / Math.pow(2, 32), l[a - 1][14] = Math.floor(l[a - 1][14]), l[a - 1][15] = (t.length - 1) * 8 & 4294967295;
+      for (let d = 0; d < a; d++) {
+        const c = new Array(80);
+        for (let u = 0; u < 16; u++) c[u] = l[d][u];
+        for (let u = 16; u < 80; u++) c[u] = Sha1.ROTL(c[u - 3] ^ c[u - 8] ^ c[u - 14] ^ c[u - 16], 1);
+        let g = i[0], v = i[1], h = i[2], b = i[3], S = i[4];
+        for (let u = 0; u < 80; u++) {
+          const y = Math.floor(u / 20), E = Sha1.ROTL(g, 5) + Sha1.f(y, v, h, b) + S + n[y] + c[u] >>> 0;
+          S = b, b = h, h = Sha1.ROTL(v, 30) >>> 0, v = g, g = E;
+        }
+        i[0] = i[0] + g >>> 0, i[1] = i[1] + v >>> 0, i[2] = i[2] + h >>> 0, i[3] = i[3] + b >>> 0, i[4] = i[4] + S >>> 0;
+      }
+      for (let d = 0; d < i.length; d++) i[d] = ("00000000" + i[d].toString(16)).slice(-8);
+      const f = s.outFormat == "hex-w" ? " " : "";
+      return i.join(f);
+      function m(d) {
+        try {
+          return new TextEncoder().encode(d, "utf-8").reduce((c, g) => c + String.fromCharCode(g), "");
+        } catch (c) {
+          return unescape(encodeURIComponent(d));
+        }
+      }
+      function P(d) {
+        const c = d.replace(" ", "");
+        return c == "" ? "" : c.match(/.{2}/g).map((g) => String.fromCharCode(parseInt(g, 16))).join("");
+      }
+    }
+    /**
+     * Function 'f' [§4.1.1].
+     * @private
+     */
+    static f(t, s, n, i) {
+      switch (t) {
+        case 0:
+          return s & n ^ ~s & i;
+        // Ch()
+        case 1:
+          return s ^ n ^ i;
+        // Parity()
+        case 2:
+          return s & n ^ s & i ^ n & i;
+        // Maj()
+        case 3:
+          return s ^ n ^ i;
+      }
+    }
+    /**
+     * Rotates left (circular left shift) value x by n positions [§3.2.5].
+     * @private
+     */
+    static ROTL(t, s) {
+      return t << s | t >>> 32 - s;
+    }
+  }
+  const getUrlHash = (e = null) => (e === null && (e = window.location.pathname), Sha1.hash(e));
+  let domain = null;
+  const getDomain = () => {
+    var e;
+    if (domain === null) {
+      const t = [...document.getElementsByTagName("script")];
+      for (let s = t.length - 1; s >= 0; s--) {
+        const [n] = (e = t[s].src.split("?")) != null ? e : "";
+        if (n.endsWith("centris_site.js")) {
+          domain = new URL(n).hostname;
+          break;
+        }
+      }
+      domain === null && (domain = "static.tagman.ca");
+    }
+    return domain;
+  };
+  let cookieValues = null;
+  const getCookie = (e) => (cookieValues === null && (cookieValues = {}, document.cookie.split(";").forEach((t) => {
+    let [s, n] = t.split("=");
+    cookieValues[s.trim()] = n;
+  })), cookieValues.hasOwnProperty(e) ? cookieValues[e] : null), setCookie = (e, t, s = null) => {
+    let n = "";
+    s !== null && (n = "expires=" + s.toGMTString()), document.cookie = `${e}=${t};${n};path=/`;
+  }, registerService = (e, t = {}) => {
+    t = merge(t, {
+      name: e,
+      status: "added",
+      statusDescription: ""
+    }), services[e] = t;
+  }, registerProvider = (e, t = {}) => {
+    t = merge(t, {
+      name: e,
+      status: "added",
+      statusDescription: ""
+    }), providers[e] = t;
+  }, Event = function() {
+    this.defaultPrevented = !1, this.propagationStopped = !1, this.preventReason = "";
+  };
+  Event.prototype.preventDefault = function(e = "") {
+    this.defaultPrevented = !0, this.preventReason = e;
+  }, Event.prototype.stopPropagation = function() {
+    this.propagationStopped = !0;
+  };
+  const Priorities = {
+    LOW: 25,
+    NORMAL: 50,
+    HIGH: 75
+  }, eventListeners = {}, on = (e, t, s = Priorities.NORMAL) => {
+    eventListeners.hasOwnProperty(e) || (eventListeners[e] = {
+      priorities: []
+    }), eventListeners[e].hasOwnProperty(s) || (eventListeners[e].priorities.push(s), eventListeners[e].priorities.sort().reverse(), eventListeners[e][s] = []), eventListeners[e][s].push(t);
+  }, emit = (e, t) => {
+    t = t || {};
+    let s = "";
+    return e.split(":").forEach((n) => {
+      s += n, eventListeners.hasOwnProperty(s) && eventListeners[s].priorities.forEach((i) => {
+        eventListeners[s][i].forEach(function(o) {
+          t.propagationStopped !== !0 && o(t);
+        });
+      }), s += ":";
+    }), t;
+  }, events = {
+    Event,
+    Priorities,
+    on,
+    emit
+  }, settings = {
+    debugMode: !1
+  };
+  let logBuffer = [], initComplete$1 = !1;
+  const log = function() {
+    let e = arguments.arguments || arguments;
+    if (!initComplete$1) {
+      logBuffer.push(Array.prototype.slice.call(e, 1));
+      return;
+    }
+    settings.debugMode !== !1 && console.log.apply(console, e);
+  }.bind(null, "OBOXADS");
+  events.on("initComplete", () => {
+    initComplete$1 = !0, logBuffer.forEach((e) => log.apply(null, e)), logBuffer = [];
+  });
+  const getStoredParam = (e) => {
+    const t = getUrlParams();
+    if (t.hasOwnProperty(e))
+      return t[e];
+    {
+      const s = getCookie(`oboxads-${e}`);
+      if (s !== null)
+        return s;
+      const n = sessionStorage.getItem(`oboxads-${e}`);
+      if (n !== null)
+        return n;
+    }
+    return null;
+  }, storageMethods = {
+    session: (e, t) => {
+      sessionStorage.setItem(`oboxads-${e}`, t);
+    },
+    cookie: (e, t) => {
+      setCookie(`oboxads-${e}`, t);
+    }
+  }, storeParams = (e, t = {}) => {
+    const s = t.storageMethod || "session", i = (t.source || "url") === "url" ? getUrlParams() : t.values;
+    typeof e == "string" ? i.hasOwnProperty(e) && storageMethods[s](e, i[e]) : e.forEach((o) => {
+      i.hasOwnProperty(o) && storageMethods[s](o, i[o]);
+    });
+  };
+  storeParams("debug", { storageMethod: "cookie" });
+  const setDebugMode = (e) => {
+    settings.debugMode = e;
+  }, getDebugMode = (e) => settings.debugMode, debug = getStoredParam("debug");
+  setDebugMode(debug && debug !== "false" ? debug : !1);
+  let OBOXADSQ = window.OBOXADSQ || [], initRan = window.OBOXAD_INIT_RAN || !1, completeRan = !1, initWaitCount = 0;
+  events.on("initWait", () => {
+    initWaitCount++;
+  }), events.on("initResponse", () => {
+    initWaitCount--;
+  });
+  const completeInit = () => {
+    completeRan || (completeRan = !0, nextTick(() => events.emit("initComplete")));
+  }, init = (e = { processQueue: !0 }) => {
+    if (!initRan) {
+      if (initRan = !0, window.OBOXAD_INIT_RAN = !0, events.emit("beforeInit"), e.processQueue) {
+        const t = OBOXADSQ;
+        OBOXADSQ = {
+          init: function() {
+          },
+          // does nothing after tagman is loaded
+          blocked: t.blocked,
+          push: function(s) {
+            s && s.cmd && commands[s.cmd] ? commands[s.cmd].fn(s) : typeof s == "function" ? s() : log("Unsupported op", s);
+          }
+        }, OBOXADSQ.unshift = OBOXADSQ.push, window.OBOXADSQ = OBOXADSQ, typeof t.forEach == "function" && t.forEach(OBOXADSQ.push);
+      }
+      events.emit("afterInit"), initWaitCount <= 0 ? completeInit() : (events.on("initResponse", () => {
+        initWaitCount <= 0 && completeInit();
+      }, events.Priorities.LOW), window.setTimeout(() => {
+        completeRan || log("init timedout"), completeInit();
+      }, 1500));
+    }
+  }, pageView = () => {
+    events.emit("pageView");
+  }, enableProvider = (e) => {
+    const t = new events.Event();
+    return t.providerName = e, events.emit(`beforeEnableProvider:${e}`, t), t.defaultPrevented ? (providers[e].status = "disabled", t.preventReason.length > 0 && (providers[e].statusDescription = t.preventReason), !1) : (providers[e].status = "enabled", events.emit(`enableProvider:${e}`, { providerName: e }), !0);
+  }, enableService = (e) => {
+    const t = new events.Event();
+    return t.serviceName = e, events.emit(`beforeEnableService:${e}`, t), t.defaultPrevented ? (services[e].status = "disabled", t.preventReason.length > 0 && (services[e].statusDescription = t.preventReason), !1) : (services[e].status = "enabled", events.emit(`enableService:${e}`, { serviceName: e }), !0);
+  };
+  let alreadyRan = !1;
+  const run = () => {
+    alreadyRan || (alreadyRan = !0, init(), events.emit("beforeConfig"), events.emit("afterConfig"), Object.keys(services).forEach((e) => {
+      enableService(e);
+    }), Object.keys(providers).forEach((e) => {
+      enableProvider(e);
+    }), events.emit("ready"));
+  }, commands = {}, providers = {}, services = {}, keysToIngore = {
+    cmd: !0
+  };
+  registerCommand("config", { fn: (e) => {
+    Object.keys(e).forEach((t) => {
+      keysToIngore.hasOwnProperty(t) || (setValue(t, e[t]), e[t]);
+    }), events.emit("configUpdated", { values: e });
+  } });
+  let alreadyLoaded = !1;
+  const banners$1 = [];
+  window.tagmanDebugger = {}, window.tagmanDebugger.banners = banners$1, window.tagmanDebugger.providers = providers, window.tagmanDebugger.services = services, window.tagmanDebugger.configValues = values;
+  const showDebugger = (e = "info") => {
+    if (alreadyLoaded) {
+      window.postMessage({
+        type: "tagman-showDebugger",
+        mode: e
+      }, "*");
+      return;
+    }
+    alreadyLoaded = !0;
+    try {
+      switch (e) {
+        case "info":
+          const t = getDomain();
+          loadScript(`https://${t}/v5/sites/tagman_debugger.js`, null, { type: "module" });
+          break;
+      }
+    } catch (t) {
+      log("Exception when showing debugger", t);
+    }
+  };
+  getDebugMode() && showDebugger(getDebugMode()), events.on("bannerConfig", ({ bannerInfo: e }) => {
+    banners$1.push(e);
+  }), events.on("bannerRemoved", ({ bannerInfo: e }) => {
+    let t = banners$1.findIndex((s) => {
+      if (s.slotName === e.slotName)
+        return !0;
+    });
+    banners$1.splice(t, 1);
+  }), registerService("debugger"), registerCommand("showDebugger", {
+    fn: ({ mode: e = "info" }) => showDebugger(e)
+  });
+  const BannerInfo = function(e, t, s = "", n = null) {
+    this.section = e, this.position = t, this.context = s, this.oderId = null, this.lineItemId = null, this.tags = null, this.categories = null, this.postId = null, this.playerId = null, this.playlistType = null, this.random = null, this.muted = null, this.vastTag = null, this.playlistId = null, this.playerTitle = null, this.autoplay = !0, this.minWidth = 0, this.minHeight = 0, this.maxWidth = 0, this.maxHeight = 0, this.el = n, this.childDiv = null, this.provider = null, this.providerData = {}, this.status = BannerInfo.STATUS_NEW, this.statusDescription = "", this.isAdRefresh = !1, this.IsIncludedInBid = !0, this.likelyViewable = "false", this.displayTime = null, this.slotName = `${e}-${t}`, this.displayStrategy = "default", this.bidsToProcess = 0;
+  };
+  BannerInfo.STATUS_NEW = "new", BannerInfo.STATUS_CONFIG = "config", BannerInfo.STATUS_DISABLED = "disabled", BannerInfo.STATUS_ADDED = "added", BannerInfo.STATUS_READY = "ready", BannerInfo.STATUS_REQUEST_SENT = "request sent", BannerInfo.STATUS_LOADED = "loaded", BannerInfo.STATUS_REMOVED = "removed", BannerInfo.STATUS_ERROR = "error", events.on("enableProvider:googleAdManager", () => {
+    (!values.providers.googleAdManager.hasOwnProperty("loadGpt") || values.providers.googleAdManager.loadGpt === !0) && (log("loading gpt"), loadScript("//securepubads.g.doubleclick.net/tag/js/gpt.js"));
+  });
+  const googletag = window.googletag = window.googletag || {};
+  googletag.cmd = googletag.cmd || [];
+  const gptRunReady = (e, { timeoutMs: t = 5e3, pollMs: s = 25 } = {}) => {
+    const n = Date.now();
+    (function i() {
+      const o = window.googletag;
+      if (!!o && o.apiReady === !0 && typeof o.pubads == "function") return e(o);
+      if (Date.now() - n > t) {
+        log("googletag [tagman] warn gptWhenReady timeout", {
+          apiReady: o == null ? void 0 : o.apiReady,
+          pubadsType: typeof (o == null ? void 0 : o.pubads)
+        });
+        return;
+      }
+      setTimeout(i, s);
+    })();
+  }, getGptInstanceId = () => {
+    const e = window.googletag;
+    return e ? (e.__instanceId || (e.__instanceId = "gpt_" + crypto.getRandomValues(new Uint32Array(1))[0].toString(16)), e.__instanceId) : "no-gpt";
+  }, bannerQueue = [], processBannerStatus = {
+    canProcessBanners: !1
+  }, processBanner = (e) => {
+    if (!processBannerStatus.canProcessBanners) {
+      bannerQueue.push(e);
+      return;
+    }
+    if (e.providerData.slotSetting === null) {
+      e.status = BannerInfo.STATUS_ERROR;
+      return;
+    }
+    nextTick(() => events.emit(`bannerReady:${e.displayStrategy}`, { bannerInfo: e }));
+  }, configureBanner = ({ bannerInfo: e }) => {
+    const t = values.slotSettings;
+    merge(t.oop, {
+      isOopBanner: !0
+    });
+    const { context: s, position: n, section: i, slotName: o } = e, a = values.providers[e.provider].displayStrategies;
+    e.providerData.slotSetting = t[`${s}-${n}`] || t[s] || t[o] || t[i] || null, e.displayStrategy = a[e.slotName] || a[e.section] || a[e.context] || a.__any__, e.providerData.slot = null, e.providerData.isOutOfPage = (i === "oop" || i === "anchor") && t.oop.isOopBanner === !0, e.providerData.slotDisplayed = !1, e.providerData.slotId = `oboxads-${o}`, processBanner(e);
+  }, getAdUnitName = (e) => {
+    const { netId: t, childNetId: s, parentAdUnit: n, baseAdUnit: i, splitAdUnits: o, adUnitMaxPos: a } = values.providers.googleAdManager, { position: l, section: f } = e, m = s !== "" ? `${t},${s}` : t;
+    return o ? `/${m}/${n}/${i}:${f}-` + (l > a[f] ? "others" : l) : `/${m}/${i}`;
+  }, defineSlot = (bannerInfo) => {
+    const googletag = window.googletag, { context, slotName, position, section, likelyViewable, postId, categories, tags } = bannerInfo, { slotSetting, slotId, isOutOfPage } = bannerInfo.providerData, fullAdUnit = getAdUnitName(bannerInfo);
+    let slot = null;
+    const mapping = googletag.sizeMapping();
+    if (isOutOfPage && section === "anchor")
+      slot = googletag.defineOutOfPageSlot(
+        fullAdUnit,
+        googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+      );
+    else if (isOutOfPage)
+      slot = googletag.defineOutOfPageSlot(fullAdUnit, slotId);
+    else {
+      const t = googletag.pubads().getSlots().find((s) => s.getSlotElementId && s.getSlotElementId() === slotId);
+      t && googletag.destroySlots([t]), slot = googletag.defineSlot(fullAdUnit, slotSetting.defaultSizes, slotId);
+    }
+    slotSetting.mapping.forEach((e) => {
+      mapping.addSize(e.resolution, e.sizes);
+    }), slot.defineSizeMapping(mapping.build());
+    let parseKVToArray = (kv) => kv.indexOf("[") === -1 ? kv.split(",") : eval(kv.replace(/&quot;/g, "'")), uniqueId = values.uniqueId || values.postId || "", categoriesArr, tagsArr;
+    return postId !== "" && (uniqueId = postId), categories === "" ? categoriesArr = values.categories || "" : categoriesArr = parseKVToArray(categories), tags === "" ? tagsArr = values.tags || "" : tagsArr = parseKVToArray(tags), slot.__instanceId = getGptInstanceId(), slot.setCollapseEmptyDiv(!0).setTargeting("section", section).setTargeting("pos", position).setTargeting("slotName", slotName).setTargeting("context", context).setTargeting("likelyViewable", likelyViewable).setTargeting("uniqueId", uniqueId).setTargeting("tags", tagsArr).setTargeting("categories", categoriesArr), slot.addService(googletag.pubads()), slot;
+  }, ensureInstanceState = () => {
+    const e = getGptInstanceId();
+    return window.googletag.__instanceId !== e && (window.googletag.__instanceId = e, window.googletag.__initialRequestSent = !1), e;
+  }, displayBanners$2 = (e, t, { banners: s }) => {
+    const n = ensureInstanceState(), i = [], o = [];
+    s.forEach((a) => {
+      let l = a.providerData.slot;
+      l && l.__instanceId !== n && (console.warn("googletag [tagman] GPT instance changed -> rebuilding", a.slotName), a.providerData.slot = null, a.providerData.slotDisplayed = !1, l = null), l || (l = a.providerData.slot = defineSlot(a)), a.postId && (l.setTargeting("postId", a.postId), l.setTargeting("uniqueId", a.postId)), a.impactifyNoAd && l.setTargeting("impactifyNoAd", !0), l.setTargeting("isAdRefresh", `${a.isAdRefresh}`);
+      const f = a.providerData.slotId;
+      a.providerData.slotDisplayed || (a.providerData.slotDisplayed = !0, e(f)), o.push(a.slotName), i.push(l);
+    }), i.length && (window.googletag.__initialRequestSent ? t(i) : (window.googletag.__initialRequestSent = !0, setTimeout(() => {
+      setTimeout(() => t(i), 0), events.emit("initialRequest", { slotsToShow: i });
+    }, 0)));
+  }, readyToProcessBanners = () => {
+    processBannerStatus.canProcessBanners = !0, bannerQueue.forEach(processBanner), bannerQueue.length = 0;
+  }, removeTag = (e) => {
+    const { el: t, slotName: s } = e, { slotId: n } = e.providerData, o = googletag.pubads().getSlots().find((a) => a.getSlotElementId && a.getSlotElementId() === n);
+    try {
+      if (t && e.el.parentNode)
+        return googletag && googletag.destroySlots && o && googletag.destroySlots([o]), t.parentNode.removeChild(t), e.status = BannerInfo.STATUS_REMOVED, events.emit("bannerRemoved", { bannerInfo: e }), !0;
+      if (availableBanners[s])
+        return o && window.googletag.destroySlots([e.providerData.slot]), e.status = BannerInfo.STATUS_REMOVED, events.emit("bannerRemoved", { bannerInfo: e }), delete availableBanners[e.slotName], !0;
+    } catch (a) {
+      console.log("destroy slot remove tag error::: ", a);
+    }
+    return !1;
+  }, availableBanners = {};
+  events.on("bannerConfig", ({ bannerInfo: e }) => {
+    availableBanners[e.slotName] = e;
+  });
+  const detectViewportSize = () => {
+    const e = document.documentElement, t = document.getElementsByTagName("body")[0] || {};
+    var s = {};
+    return s.width = window.innerWidth || e.clientWidth || t.clientWidth || 0, s.height = window.innerHeight || e.clientHeight || t.clientHeight || 0, s;
+  }, viewportSmallerThan = function(e) {
+    var t = detectViewportSize();
+    const s = parseInt(e[0]), n = parseInt(e[1]);
+    return (s > t.width || s === 0) && (n > t.height || n === 0);
+  }, viewportLargerThan = function(e) {
+    var t = detectViewportSize();
+    const s = parseInt(e[0]), n = parseInt(e[1]);
+    return (s <= t.width || s === 0) && (n <= t.height || n === 0);
+  }, detectMobile = () => {
+    var e = !1, t = detectViewportSize();
+    return e = t.width > 0 && t.width < 728, e;
+  }, viewport = {
+    detectViewportSize,
+    viewportSmallerThan,
+    viewportLargerThan,
+    detectMobile
+  };
+  var isElementInViewport$1 = (e, t = {}) => {
+    var s, n, i, o = t.hasOwnProperty("percentage") ? 1 - t.percentage : 1, a = t.offset || 0;
+    if (e.getAttribute("data-section") === "special") {
+      if (e.offsetHeight === 0)
+        return !1;
+    } else if (!e || e.offsetParent === null)
+      return !1;
+    return s = e.getBoundingClientRect(), n = a + e.offsetWidth * o, i = a + e.offsetHeight * o, s.top + n <= (window.innerHeight || document.documentElement.clientHeight) && s.bottom - i >= 0;
+  };
+  const elementsToTrack = [];
+  let nextCheckTimerId = null, viewportUpdatedFlag = !0, checkInterval = 150, noUpdateCount = 0, scrollPos = 0, eventDescription = {
+    active: !1,
+    direction: "DOWN"
+  };
+  const isElementInViewport = (e, t) => {
+    const s = isElementInViewport$1(e.el, e.options);
+    return s && e.inView === !1 ? (e.inView = !0, e.options.enterCallback && e.options.enterCallback()) : s === !1 && e.inView && (e.inView = !1, e.options.leaveCallback && e.options.leaveCallback()), s;
+  }, checkElements = () => {
+    if (viewportUpdatedFlag) {
+      viewportUpdatedFlag = !1, noUpdateCount = 0;
+      let e = elementsToTrack.slice().filter(isElementInViewport);
+      e.length > 0 && (e.forEach(
+        function(t, s) {
+          t.options.callbackOnce && (t.options.callbackOnce(), delete t.options.callbackOnce);
+        }
+      ), elementsToTrack.length === 0 && removeEventListeners());
+    } else
+      noUpdateCount += checkInterval, noUpdateCount > 1500 && (window.clearInterval(nextCheckTimerId), nextCheckTimerId = null, noUpdateCount = 0);
+  }, monitorElement = (e, t = {}) => {
+    eventDescription.active === !1 && addEventListeners(), elementsToTrack.push(
+      {
+        el: e,
+        options: t,
+        inView: !1
+      }
+    ), viewportUpdated();
+  }, scrollDirection = () => {
+    let e = window.pageYOffset || document.documentElement.scrollTop;
+    e > scrollPos ? eventDescription.direction = "DOWN" : eventDescription.direction = "UP", scrollPos = e;
+  }, viewportUpdated = (e) => {
+    typeof e != "undefined" && e.type === "scroll" && scrollDirection(), viewportUpdatedFlag = !0, nextCheckTimerId === null && (nextCheckTimerId = window.setInterval(checkElements, checkInterval), checkElements());
+  }, addEventListeners = () => {
+    eventDescription.action = !0, window.addEventListener("scroll", viewportUpdated), window.addEventListener("focus", viewportUpdated), window.addEventListener("resize", viewportUpdated);
+  }, removeEventListeners = () => {
+    eventDescription.active = !1, window.removeEventListener("scroll", viewportUpdated), window.removeEventListener("focus", viewportUpdated), window.removeEventListener("resize", viewportUpdated);
+  }, elements = [], options = {}, newElement = (e) => ({
+    el: e,
+    hasBeenViewed: !1,
+    isIntersecting: !1
+  }), observeElement = (e, t, s = {}) => {
+    s.hasOwnProperty("offset") && (isNaN(s.offset) ? options.rootMargin = s.offset : s.offset < 0 ? options.rootMargin = -s.offset + "px 0px" : options.rootMargin = s.offset + "px 0px"), t !== null && !elements.hasOwnProperty(t) && (elements[t] = newElement(e)), e.observer = new window.IntersectionObserver(
+      function(n) {
+        n.forEach((i) => {
+          let o = {
+            name: t,
+            el: e,
+            time: i.time,
+            entry: i
+          };
+          o.direction = i.boundingClientRect.y < i.rootBounds.y ? "BOTTOM" : "TOP", i.isIntersecting && !elements[t].isIntersecting ? (o.state = "ENTER", elements[t].isIntersecting = !0, elements[t].hasBeenViewed = !0, enterCallbacks(o, s)) : !i.isIntersecting && elements[t].isIntersecting && (o.state = "LEAVE", elements[t].isIntersecting = !1, leaveCallbacks(o, s));
+        });
+      },
+      options
+    ), e.observer.observe(e);
+  }, enterCallbacks = (e, t) => {
+    t.hasOwnProperty("callback") && t.callback(e), t.hasOwnProperty("callbackOnce") && (t.callbackOnce(e), delete t.callbackOnce), t.hasOwnProperty("enterCallback") && t.enterCallback(e), t.hasOwnProperty("enterCallbackOnce") && (t.enterCallbackOnce(e), delete t.enterCallbackOnce);
+  }, leaveCallbacks = (e, t) => {
+    t.hasOwnProperty("callback") && t.callback(e), t.hasOwnProperty("callbackOnce") && (t.callbackOnce(e), delete t.callbackOnce), t.hasOwnProperty("leaveCallback") && t.leaveCallback(e), t.hasOwnProperty("leaveCallbackOnce") && (t.leaveCallbackOnce(e), delete t.leaveCallbackOnce);
+  }, unmonitorElement = (e) => {
+    let t;
+    elementsToTrack.forEach((s, n) => {
+      e === s && (t = n);
+    }), e.observer && e.observer.disconnect(), t >= 0 && elementsToTrack.splice(t, 1);
+  };
+  values.breakPoints = values.breakPoints || {}, merge(values.breakPoints, {
+    desktop: [1024, 491],
+    tablet: [780, 490]
+  });
+  const getDataAttributes = (e) => {
+    let t = {};
+    if (e.dataset)
+      t = e.dataset;
+    else {
+      const s = /^data-/;
+      for (let n = e.attributes, i = n.length, o = 0; o < i; o++)
+        s.test(n[o].name) && (t[n[o].name.substring(5)] = n[o].value);
+    }
+    return t;
+  }, sectionPositions = {};
+  let bannerBuffer = [], initComplete = !1;
+  events.on("ready", () => {
+    initComplete = !0, bannerBuffer.forEach(addBanner), bannerBuffer = [];
+  }, events.Priorities.LOW);
+  const getTagElement = (e = null) => {
+    if (e)
+      return e;
+    if (document.currentScript && document.currentScript.parentNode && document.currentScript.parentNode.className === "oboxads")
+      e = document.currentScript.parentNode;
+    else {
+      const t = document.scripts, s = t.length;
+      for (let n = 0; n < s; n++)
+        if (t[n] && t[n].parentNode && t[n].parentNode.className === "oboxads") {
+          e = t[n].parentNode;
+          break;
+        }
+    }
+    return e;
+  };
+  events.on("bannerRemoved", ({ bannerInfo: e }) => {
+    sectionPositions[e.section] > 0 && sectionPositions[e.section]--;
+  });
+  const findChildDiv = (e) => {
+    const t = e.childNodes.length;
+    let s = !1, n = 0, i = null;
+    for (; !s && n < t; )
+      e.childNodes[n].nodeName === "DIV" ? (s = !0, i = e.childNodes[n]) : n++;
+    return i;
+  }, addBanner = (e = {}) => {
+    if (events.emit("beforeBannerAdded", new events.Event()), !initComplete) {
+      bannerBuffer.push(e);
+      return;
+    }
+    const t = getTagElement(e.el);
+    if (t === null) {
+      log("no tag element found");
+      return;
+    }
+    const s = getDataAttributes(t), n = s.section || "", i = s.context || "", o = s.playlistid || "", a = s.playerid || "", l = s.postId || "", f = s.tags || "", m = s.categories || "", P = s.playertitle || "", d = s.autoplay || "viewable", c = s.muted || !0, g = s.random || !1, v = s.minwidth || 0, h = s.minheight || 0, b = s.maxwidth || null, S = s.maxheight || null, u = s.playlisttype || null;
+    sectionPositions.hasOwnProperty(n) ? sectionPositions[n]++ : sectionPositions[n] = 1;
+    const y = sectionPositions[n], E = findChildDiv(t), r = new BannerInfo(n, y, i, t);
+    r.childDiv = E, r.postId = l, r.categories = m, r.tags = f, r.playlistId = o, r.playerId = a, r.playerTitle = P, r.muted = c, r.random = g, r.autoplay = d, r.minWidth = v, r.minHeight = h, r.maxWidth = b, r.maxHeight = S, r.playlistType = u, r.autoplay === "true" && (r.autoplay = "viewable");
+    let T = !1;
+    var p;
+    s.hasOwnProperty("minRes") && (p = s.minRes.match(/\[(\d+),(\d+)\]/), p && p.length >= 3 && !viewportLargerThan([p[1], p[2]]) && (T = !0, r.statusDescription = "min res attribute")), s.hasOwnProperty("maxRes") && (p = s.maxRes.match(/\[(\d+),(\d+)\]/), p && p.length >= 3 && !viewportSmallerThan([p[1], p[2]]) && (T = !0, r.statusDescription = "max res attribute"));
+    const w = new events.Event();
+    if (w.bannerInfo = r, events.emit(`bannerConfig:${n}:${y}`, w), r.context !== "" && events.emit(`bannerConfigContext:${r.context}`, w), w.defaultPrevented === !0 && (T = !0, w.preventReason.length > 0 ? r.statusDescription = w.preventReason : r.statusDescription = "not specified"), T) {
+      log("Disabling", r.slotName), r.status = BannerInfo.STATUS_DISABLED, t.className += " oboxads-disabled";
+      const A = new events.Event();
+      A.bannerInfo = r, events.emit("bannerDisabled", A);
+      return;
+    }
+    if (r.status = BannerInfo.STATUS_ADDED, E)
+      E.id = `oboxads-${r.slotName}`;
+    else {
+      console.error(`Missing child for ${r.slotName}`), r.status = BannerInfo.STATUS_ERROR;
+      return;
+    }
+    t.className += ` oboxads-${r.slotName} oboxads-${r.section}`, r.context !== "" && (t.className += ` oboxads-${r.context}`);
+    const D = new events.Event();
+    D.bannerInfo = r, events.emit("bannerProviderClaim", D), r.provider === null && (log(`No one claimend ${r.slotName}`), r.statusDescription = "not claimed by any providers");
+    const x = new events.Event();
+    x.bannerInfo = r, events.emit(`bannerAdded:${r.provider}`, x);
+  };
+  registerCommand("addBanner", {
+    fn: addBanner
+  }), registerCommand("refresh", {
+    fn: ({ values: e }) => {
+      Object.values(availableBanners).forEach((t) => {
+        e.forEach((s) => {
+          (s === t.slotName || s === t.context) && events.emit(`customBannerRefresh:${t.provider}`, { bannerInfo: t });
+        });
+      });
+    }
+  }), registerCommand("pageView", {
+    fn: pageView
+  });
+  const bannerQueues$1 = {};
+  let timers$1 = {};
+  const displayBanners$1 = (e) => {
+    log("displaying banner for", e);
+    const t = bannerQueues$1[e].slice();
+    bannerQueues$1[e].length = 0;
+    const s = (/* @__PURE__ */ new Date()).getTime();
+    t.forEach((n) => {
+      n.status = BannerInfo.STATUS_REQUEST_SENT, n.displayTime = s;
+    }), events.emit(`bannerDisplay:${e}`, { banners: t }), timers$1[e] = null;
+  };
+  events.on("bannerReady:asap", ({ bannerInfo: e }) => {
+    const t = e.provider;
+    bannerQueues$1.hasOwnProperty(t) || (bannerQueues$1[t] = [], timers$1[t] = null), bannerQueues$1[t].push(e), timers$1[t] === null && (timers$1[t] = setTimeout(() => displayBanners$1(t), 100));
+  }), merge(values, {
+    lazyLoadOffset: -300,
+    monitorElement: !1
+  });
+  const bannerQueues = {};
+  let timers = {};
+  const displayBanners = (e) => {
+    log("displaying banner for", e);
+    const t = bannerQueues[e].slice();
+    bannerQueues[e].length = 0;
+    const s = (/* @__PURE__ */ new Date()).getTime();
+    t.forEach((n) => {
+      unmonitorElement(n.el), n.status = BannerInfo.STATUS_REQUEST_SENT, n.displayTime = s;
+    }), events.emit(`bannerDisplay:${e}`, { banners: t }), timers[e] = null;
+  }, bannerInView = (e) => {
+    const t = e.provider;
+    bannerQueues.hasOwnProperty(t) || (bannerQueues[t] = [], timers[t] = null), bannerQueues[t].push(e), timers[t] === null && (timers[t] = setTimeout(() => displayBanners(t), 100));
+  };
+  events.on("bannerReady:lazyLoad", ({ bannerInfo: e }) => {
+    if (values.monitorElement)
+      monitorElement(e.el, {
+        offset: e.lazyLoadOffset || values.lazyLoadOffset,
+        callbackOnce: () => bannerInView(e)
+      });
+    else {
+      let t = `${e.section}:${e.context}:${e.position}`;
+      observeElement(e.el, t, {
+        offset: e.lazyLoadOffset || values.lazyLoadOffset,
+        callbackOnce: () => bannerInView(e)
+      });
+    }
+  });
+  const serviceName$1 = "geoEdge";
+  values.services.geoEdge = values.services.geoEdge || {}, merge(values.services.geoEdge, {
+    policyKey: "a39f740a-7319-4a0d-8fcd-2f1a88a29dd9",
+    debugMode: !1,
+    activeSegments: []
+  });
+  let serviceEnabled = !0;
+  const debugMode = !!((I = values.services.geoEdge) != null && I.debugMode), experimentMode = !!((O = values.services.geoEdge) != null && O.experimentMode);
+  if (debugMode) {
+    serviceEnabled = !1;
+    const e = getUrlParams();
+    e != null && e.geoEdge ? (serviceEnabled = e.geoEdge === "1", storeParams("geoEdge", serviceEnabled ? "1" : "0")) : getStoredParam("geoEdge") === "1" && (serviceEnabled = !0);
+  }
+  if (experimentMode) {
+    serviceEnabled = !1;
+    const e = getStoredParam("experimentId"), t = values.services.geoEdge.activeSegments;
+    t != null && t.includes(e) && (serviceEnabled = !0);
+  }
+  events.on("beforeEnableService:geoEdge", (e) => {
+    serviceEnabled || e.preventDefault();
+  }), events.on(`enableService:${serviceName$1}`, () => {
+    events.on("beforeEnableProvider:googleAdManager", (e) => {
+      const t = values.services.geoEdge.policyKey;
+      window.grumi = {
+        key: t
+      }, nextTick(() => {
+        loadScript(`//rumcdn.geoedge.be/${t}/grumi-ip.js`);
+      });
+    });
+  }), registerService(serviceName$1);
+  const updateSessionDepth = () => {
+    const e = parseInt(getStoredParam("sessionDepth") || 0) + 1;
+    storeParams("sessionDepth", {
+      source: "manual",
+      values: { sessionDepth: e }
+    });
+  };
+  events.on("pageView", updateSessionDepth, events.Priorities.HIGH), updateSessionDepth(), registerService("sessionDepth");
+  const serviceName = "experimentTracking", experimentConfig = values.services[serviceName] = values.services[serviceName] || {};
+  merge(values.services[serviceName], {
+    gaCustomDimension: ""
+  });
+  let experimentId = getStoredParam("experimentId") || "";
+  const cookieExpId = getCookie("oboxads-experimentId") || "", gaCustomDm = experimentConfig.gaCustomDimension, urlParams = getUrlParams();
+  urlParams.hasOwnProperty("expId") && urlParams.expId !== "" ? experimentId = urlParams.expId : experimentId === "" && (cookieExpId !== "" ? experimentId = cookieExpId : experimentId = "exp-" + (Math.floor(Math.random() * 10) + 1)), storeParams("experimentId", {
+    source: "manual",
+    values: { experimentId }
+  }), events.on("dimensions", ({ dimensions: e }) => {
+    e["experiment-id"] = experimentId;
+  }), events.on("sessionStarted", ({ dimensions: e, gtmVars: t }) => {
+    gaCustomDm !== "" && (e[gaCustomDm] = experimentId), t.experimentId = experimentId;
+  }), registerService(serviceName);
+  const initTargeting = () => {
+    googletag.cmd.push(() => {
+      values.clearBeforeTaregeting && googletag.pubads().clearTargeting();
+      const e = getUrlParams(), t = values.providers.googleAdManager;
+      let s = "";
+      values.pageData = values.pageData || {}, googletag.pubads().enableSingleRequest(), values.subadunit && (values.subadunit.indexOf("/") === 0 ? (values.subadunit = values.subadunit.substring(1, values.subadunit.length), s = values.subadunit.split("/")) : s = values.subadunit), googletag.pubads().set("page_url", values.site).setTargeting("site", t.baseAdUnit).setTargeting("sessionDepth", getStoredParam("sessionDepth") || 1).setTargeting("urlHash", getUrlHash()).setTargeting("experimentId", getStoredParam("experimentId") || "").setTargeting("affid", (values == null ? void 0 : values.affid) || "2309dc8b2ec29cb8fe13"), e.custom && googletag.pubads().setTargeting("custom", e.custom || ""), s && googletag.pubads().setTargeting("subadunit", s || ""), getStoredParam("utm_campaign") && googletag.pubads().setTargeting("utmCampaign", getStoredParam("utm_campaign") || ""), getStoredParam("utm_source") && googletag.pubads().setTargeting("utmSource", getStoredParam("utm_source") || ""), getStoredParam("utm_medium") && googletag.pubads().setTargeting("utmMedium", getStoredParam("utm_medium") || ""), getStoredParam("utm_term") && googletag.pubads().setTargeting("utmTerm", getStoredParam("utm_term") || ""), getStoredParam("utm_content") && googletag.pubads().setTargeting("utmContent", getStoredParam("utm_content") || "");
+      let n = [
+        "providers",
+        "services",
+        "iab",
+        "site",
+        "lazyLoadOffset",
+        "slotSettings",
+        "monitorElement",
+        "ppid",
+        "breakPoints",
+        "startTime",
+        "resolutions"
+      ];
+      Object.entries(values).forEach(([i, o]) => {
+        o = typeof o == "boolean" ? o.toString() : o, i === "lang" ? googletag.pubads().setTargeting("lang", o) : i === "url" ? googletag.pubads().set("page_url", o) : i === "pageData" ? (o.contentCategories && googletag.pubads().setTargeting("contentcategories", o), o.contentGroup && googletag.pubads().setTargeting("contentGroup", o.contentGroup || "")) : i === "contentCategories" && o ? googletag.pubads().setTargeting("contentcategories", o) : !n.includes(i) && o && googletag.pubads().setTargeting(i, o);
+      });
+    });
+  };
+  events.on("beforeInit", () => {
+    storeParams([
+      "utm_campaign",
+      "utm_source",
+      "utm_medium",
+      "utm_term",
+      "utm_content"
+    ]);
+  }), registerService("utmTracking");
+  const providerName = "googleAdManager", banners = {};
+  let enabled = !1;
+  const providerConfigValues = values.providers[providerName] = values.providers[providerName] || {};
+  merge(values.providers[providerName], {
+    netId: "21794372001",
+    childNetId: "",
+    displayStrategies: {
+      "header-1": "asap",
+      anchor: "asap",
+      special: "asap",
+      instream: "asap",
+      outstream: "asap",
+      oop: "asap",
+      multiplex: "lazyLoad",
+      __any__: "lazyLoad"
+    },
+    displayStrategy: "asap",
+    parentAdUnit: "",
+    baseAdUnit: "",
+    splitAdUnits: !1,
+    adUnitMaxPos: {
+      oop: 2,
+      anchor: 1,
+      content: 6,
+      footer: 2,
+      header: 2,
+      side: 5,
+      native: 2,
+      outstream: 1,
+      special: 2,
+      multiplex: 1
+    },
+    sections: null,
+    slots: {}
+  });
+  const setPublisherId = () => {
+    values.ppid && googletag.pubads && googletag.pubads().setPublisherProvidedId(values.ppid);
+  };
+  events.on("bannerAdded", ({ bannerInfo: e }) => {
+    banners[e.slotName] = e;
+  }), events.on(`enableProvider:${providerName}`, (e) => {
+    enabled = !0, gptRunReady(() => {
+      events.emit("beforeInitTargeting", e), initTargeting(), setPublisherId(), window.googletag.pubads().addEventListener("slotRenderEnded", (t) => {
+        const s = t.slot.getSlotElementId().substr(8);
+        banners.hasOwnProperty(s) ? (banners[s].status = BannerInfo.STATUS_LOADED, t.bannerInfo = banners[s], t.bannerInfo.orderId = t.campaignId, t.bannerInfo.lineItemId = t.lineItemId, events.emit("bannerRendered", t)) : s.includes("anchor-1") ? (t.bannerInfo = banners["anchor-1"], banners["anchor-1"].status = BannerInfo.STATUS_LOADED, t.bannerInfo = banners["anchor-1"], t.bannerInfo.orderId = t.campaignId, t.bannerInfo.lineItemId = t.lineItemId, events.emit("bannerRendered", t)) : log("could not find slot", s);
+      }), window.googletag.pubads().addEventListener("impressionViewable", (t) => {
+        const s = t.slot.getSlotElementId().substr(8);
+        banners.hasOwnProperty(s) ? (t.bannerInfo = banners[s], events.emit("bannerViewable", t)) : s.includes("anchor-1") ? (t.bannerInfo = banners["anchor-1"], events.emit("bannerViewable", t)) : log("could not find slot", s);
+      }), nextTick(() => {
+        const t = new events.Event();
+        events.emit("googleAdManagerRegisterDisplay", t), t.defaultPrevented || (events.on(`bannerDisplay:${providerName}`, displayBanners$2.bind({}, window.googletag.display, window.googletag.pubads().refresh)), events.on(`bannerRefresh:${providerName}`, displayBanners$2.bind({}, window.googletag.display, window.googletag.pubads().refresh)));
+        const s = new events.Event();
+        events.emit("googleAdManagerEnableServices", s), s.defaultPrevented || (window.googletag.pubads().disableInitialLoad(), window.googletag.enableServices(), readyToProcessBanners());
+      });
+    }), events.on("configUpdated", () => {
+      setPublisherId(), events.emit("beforeInitTargeting", e), initTargeting();
+    });
+  });
+  const sectionAllowed = (e) => {
+    let t = null;
+    switch (providerConfigValues.sections.hasOwnProperty(e.slotName) ? t = providerConfigValues.sections[e.slotName] : providerConfigValues.sections.hasOwnProperty(e.section) ? t = providerConfigValues.sections[e.section] : providerConfigValues.sections.hasOwnProperty(e.context) && (t = providerConfigValues.sections[e.context]), t) {
+      case null:
+        return !1;
+      case !0:
+        return !0;
+      case "mobile":
+        return viewport.detectMobile();
+      case "desktop":
+        return !viewport.detectMobile();
+    }
+  };
+  events.on("bannerProviderClaim", ({ bannerInfo: e }) => {
+    enabled && e.provider === null && (providerConfigValues.sections === null || sectionAllowed(e)) && (e.provider = providerName);
+  }), events.on(`bannerAdded:${providerName}`, configureBanner), registerProvider(providerName), events.on("afterConfig", () => {
+    var e;
+    values.lang = ((e = document.documentElement) == null ? void 0 : e.lang) || "fr";
+  }), events.on("bannerConfig", ({ bannerInfo: e }) => {
+    e.section === "content" && e.context === "map" && (e.context = "map-content");
+  });
+  const updatePage = () => {
+    Object.values(availableBanners).forEach((e) => {
+      removeTag(e);
+    });
+  }, onPagerNavClick = (e) => {
+    e.target.closest(
+      ".pager .goFirst, .pager .goLast:not(.inactive), .pager .previous:not(.inactive), .pager .next:not(.inactive)"
+    ) && updatePage();
+  };
+  document.addEventListener("click", onPagerNavClick), run();
+})();

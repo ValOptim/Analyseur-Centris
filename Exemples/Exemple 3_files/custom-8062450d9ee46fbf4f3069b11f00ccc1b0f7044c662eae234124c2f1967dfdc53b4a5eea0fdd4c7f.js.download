@@ -1,0 +1,199 @@
+/*****************************************
+* Local Logic Analytics - Centris
+*****************************************/
+
+function trackSearchPageEvent(parent, trackEvent, buttonText) {
+  var data = {};
+  var mlsId = parent.find('span.ll-match-score').attr('data-id');
+  var data = {
+    button_text: buttonText,
+    lifestyle_score: parent.find('span.ll-match-score > span').attr('class').split('ll-score-color-')[1],
+    lat: parent.find('span.ll-match-score').attr('data-lat'),
+    lng: parent.find('span.ll-match-score').attr('data-lng'),
+    listing_id: mlsId,
+    mls_id: mlsId,
+    listing_price: parent.find('[itemprop="price"]').text(),
+    listing_bedrooms: parent.find('.cac').text(),
+    listing_bathrooms: parent.find('.sdb').text()
+  }
+  window.llTrackEvent(trackEvent, data);
+}
+
+window.llIsListingPage = function() {
+  return document.getElementById('overview');
+}  
+
+window.llIsSearchPage = function() {
+  return (document.getElementById('map-container') || 
+     document.getElementsByClassName('templateListItem').length > 0 ||
+     document.getElementsByClassName('thumbnailItem').length > 0)
+}
+
+window.llIsDesktop = function() {
+  return true;
+}    
+window.llIsMobile = function() {
+  return false;
+}  
+
+window.llGetSearchParameters = function() {
+  return {};
+}
+
+window.llGetPropertyDetails = function() {
+  var info = {};
+  if (jQuery('.description > table > tbody').length > 0) {
+    jQuery('.description > table > tbody').children('tr').each( function () {
+        var key = this.children[0].textContent;
+        var val = this.children[0].textContent;
+        info[key] = val;
+    });
+  }; 
+  info['listing_id'] = window.MlsNumber;
+  info['mls_id'] = window.MlsNumber;
+  info['address'] = jQuery('.address h2').text();
+  return info;
+}
+
+window.llAddListingListeners = function () {
+  jQuery('body').on( 
+    'mousedown',
+    '.btn-contact',
+    function() {
+      window.llTrackEvent('conversion', { button_text: 'contact-agent' });
+    }
+  );
+  jQuery('body').on( 
+    'mousedown',
+    '.brokerid a',
+    function() {
+      window.llTrackEvent('conversion', { button_text: 'view-realtor-info' });
+    }
+  );
+  // Conversion (Share)
+  jQuery('body').on(
+    'mousedown',
+    '.sharethis a',
+    function() {
+      var $self = jQuery(this);
+      var medium = $self.attr('data-socialname');
+      if (medium == 'sendEmailbutton') {
+        window.llTrackEvent('conversion', { 
+          button_text: 'share',
+          misc: { 
+            medium: 'email'
+          }
+        });
+      } else {
+        window.llTrackEvent('conversion', { 
+          button_text: 'share',
+          misc: { 
+            medium: medium
+          }
+        });
+      }
+    }
+  );
+  // Conversion (Save)
+  jQuery('body').on(
+    'mousedown',
+    'a.icon-fav',
+    function() {
+      var $self = jQuery(this);
+      var isActive = $self.hasClass('actif');
+      if (isActive) {
+        window.llTrackEvent('unfavourite');
+      } else {
+        window.llTrackEvent('conversion', { button_text: 'favourite' });
+      }
+    }
+  );
+
+  // Misc info
+  jQuery('body').on( // Google maps
+    'mousedown',
+    '.menu .onmap a',
+    function() {
+      window.llTrackEvent('view-listing-details', {
+        button_text: 'map'
+      });
+    }
+  );
+  jQuery('body').on( // Street view
+    'mousedown',
+    '.menu .streetview a',
+    function() {
+      window.llTrackEvent('view-listing-details', {
+        button_text: 'street-view'
+      });
+    }
+  );
+  jQuery('body').on( // Walk score
+    'mousedown',
+    '.region-nav .walkscore a',
+    function() {
+      window.llTrackEvent('view-listing-details', {
+        button_text: 'walk-score'
+      }); 
+    }
+  ); 
+  jQuery('body').on( // Original listing
+    'mousedown',
+    '.details .btn',
+    function() {
+      window.llTrackEvent('conversion', {
+        button_text: 'view-original-listing'
+      });
+    }
+  );  
+}
+
+window.llAddSearchListeners = function () {
+  jQuery('body').on(
+    'mousedown', 
+    '#divMainResultInfoW .description a.btn', 
+    function() {
+      var $self = jQuery(this);
+      var payload = {};
+      var mlsId = $self.parent().find('#MlsNumberNoStealth').text();
+      payload.listing_id = mlsId;  // no custom id present, so use mls id
+      payload.mls_id = mlsId;
+      payload.listing_price = $self.parent().find('.price').text();
+      payload.listing_address = $self.parent().find('.address').text();
+      payload.listing_bedrooms = $self.parent().find('.features').text().split(',')[0];
+      payload.listing_bathrooms = $self.parent().find('.features').text().split(',')[1];
+      window.llTrackEvent('map-conversion', payload);
+    }
+  );
+
+  jQuery('body').on(
+    'mousedown', 
+    '.location-container',
+    function () {
+    var $parent = jQuery(this).parents('.shell');
+    trackSearchPageEvent($parent, 'lifestyle-conversion', 'cta');
+  });
+
+  // main image
+  jQuery('body').on(
+    'mousedown', 
+    '.thumbnail',
+    function () {
+      var $parent = jQuery(this).parents('.shell');
+      trackSearchPageEvent($parent, 'lifestyle-conversion', 'picture');
+    }
+  );
+
+  // favourite button
+  jQuery('body').on(
+    'mousedown', 
+    '.thumbnail-icon-fav',
+    function () {
+      var $parent = jQuery(this).parents('.shell');
+      trackSearchPageEvent($parent, 'lifestyle-conversion', 'favourite');
+    }
+  );
+}
+
+
+

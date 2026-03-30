@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<!-- saved from url=(3675)https://sdk.locallogic.co/sdks-app/v1/local-content?globalOptions=%7B%22locale%22%3A%22fr%22%2C%22appearance%22%3A%7B%22theme%22%3A%22day%22%2C%22variables%22%3A%7B%22-%2Dll-color-primary%22%3A%22%23010159%22%2C%22-%2Dll-color-primary-variant1%22%3A%22%23010159%22%2C%22-%2Dll-border-radius-small%22%3A%228px%22%2C%22-%2Dll-border-radius-medium%22%3A%2216px%22%2C%22-%2Dll-font-family%22%3A%22Avenir%2C%20sans-serif%22%7D%7D%7D&options=%7B%22mapProvider%22%3A%7B%22name%22%3A%22maptiler%22%7D%2C%22zoom%22%3A20%2C%22pitch%22%3A0%2C%22bearing%22%3A0%2C%22cooperativeGestures%22%3Afalse%2C%22distanceUnit%22%3A%22metric%22%2C%22hideScores%22%3Afalse%2C%22collapseScores%22%3Afalse%2C%22scoresMenu%22%3A%7B%22defaultOpen%22%3Atrue%2C%22title%22%3Atrue%2C%22categories%22%3A%7B%22amenities%22%3A%7B%22hide%22%3Afalse%2C%22order%22%3A1%2C%22colors%22%3A%7B%22background%22%3A%22%23FFF2C3%22%2C%22fill%22%3A%22%23BF8500%22%7D%2C%22scores%22%3A%7B%22shopping%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A1%7D%2C%22groceries%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A2%7D%2C%22restaurants%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A3%7D%2C%22cafes%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A4%7D%7D%7D%2C%22education%22%3A%7B%22hide%22%3Afalse%2C%22order%22%3A2%2C%22colors%22%3A%7B%22background%22%3A%22%23E4EFFF%22%2C%22fill%22%3A%22%23003548%22%7D%2C%22scores%22%3A%7B%22daycares%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A1%7D%2C%22primary_schools%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A2%7D%2C%22high_schools%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A3%7D%7D%7D%2C%22transport%22%3A%7B%22hide%22%3Afalse%2C%22order%22%3A3%2C%22colors%22%3A%7B%22background%22%3A%22%23E9F8FA%22%2C%22fill%22%3A%22%23008491%22%7D%2C%22scores%22%3A%7B%22transit_friendly%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A1%7D%2C%22car_friendly%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A2%7D%2C%22pedestrian_friendly%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A3%7D%2C%22cycling_friendly%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A4%7D%7D%7D%2C%22character%22%3A%7B%22hide%22%3Afalse%2C%22order%22%3A4%2C%22colors%22%3A%7B%22background%22%3A%22%23FFDAAC%22%2C%22fill%22%3A%22%23FF7044%22%7D%2C%22scores%22%3A%7B%22nightlife%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A1%7D%2C%22vibrant%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A2%7D%2C%22historic%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A3%7D%2C%22quiet%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A4%7D%7D%7D%2C%22nature%22%3A%7B%22hide%22%3Afalse%2C%22order%22%3A5%2C%22colors%22%3A%7B%22background%22%3A%22%23D8F4D9%22%2C%22fill%22%3A%22%230F766E%22%7D%2C%22scores%22%3A%7B%22parks%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A1%7D%2C%22greenery%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A2%7D%7D%7D%2C%22health%22%3A%7B%22hide%22%3Afalse%2C%22order%22%3A6%2C%22colors%22%3A%7B%22background%22%3A%22%23FFE7FE%22%2C%22fill%22%3A%22%23FF84D6%22%7D%2C%22scores%22%3A%7B%22wellness%22%3A%7B%22hide%22%3Afalse%2C%22hideScore%22%3Afalse%2C%22order%22%3A1%7D%7D%7D%7D%7D%2C%22lat%22%3A45.553202%2C%22lng%22%3A-73.611109%2C%22marker%22%3A%7B%22lat%22%3A45.553202%2C%22lng%22%3A-73.611109%7D%7D&apiKey=V3%20lERfIZokEQL7BG2FbuKrX3xB328aF9po.c6b1aa0a-fb31-417c-95e1-5cf990e51871&clientId=lERfIZokEQL7BG2FbuKrX3xB328aF9po -->
+<html lang="en" data-theme="day" style="--ll-font-family: Avenir, sans-serif; --ll-color-primary: #010159; --ll-colors-primary-10: #E7E7FA; --ll-colors-primary-25: #DADAFA; --ll-colors-primary-50: #393991; --ll-colors-primary-100: #010159; --ll-colors-primary-200: #05052B; --ll-colors-primary-300: #05050D; --ll-color-primary-variant1: #010159; --ll-colors-secondary-10: #414199; --ll-colors-secondary-25: #3C3C94; --ll-colors-secondary-50: #1D1D75; --ll-colors-secondary-100: #010159; --ll-colors-secondary-200: #050540;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script type="module" crossorigin="" src="./polyfills-CKLB2cGl.js.download"></script>
+
+  
+  <!-- <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" /> -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://sdk.locallogic.co/sdks-app/v1/assets/apple-touch-icon-B95mkU2r.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://sdk.locallogic.co/sdks-app/v1/assets/favicon-32x32-Cgq_834-.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://sdk.locallogic.co/sdks-app/v1/assets/favicon-16x16-Dwa1e1v_.png">
+  <link rel="manifest" href="https://sdk.locallogic.co/sdks-app/v1/assets/site-BwHFeIBa.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Local Logic</title>
+  <script type="module" crossorigin="" src="./index-Dx1NHIbT.js.download"></script>
+  <link rel="modulepreload" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/mapbox-vendor-CDLLRDfd.js">
+  <link rel="stylesheet" crossorigin="" href="./index-Bp95XCzH.css">
+  <script type="module">import.meta.url;import("_").catch(()=>1);(async function*(){})().next();if(location.protocol!="file:"){window.__vite_is_modern_browser=true}</script>
+  <script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+<link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index-DTncnOY6.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index.es-DpYJMMLG.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/FlowerLotus.es-CSw_x-B2.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/IconBase.es-CE9NbtWl.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/Train.es-BZtXVfp9.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/analytics-DjCxYchZ.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/useResponsiveBreakpoints-DXzMU02P.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/useScores-tqlYVhbT.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/getMapProviderConfig-DyuWO782.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/keyFactory-Cftv3OBt.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/X.es-M8vkhAVB.js"><link rel="stylesheet" crossorigin="" href="./getMapProviderConfig-UWfJoO0I.css"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index-OFwvjPkL.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/Tree.es-VQFwIHWS.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/Backpack.es-DyLp_nvh.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/GraduationCap.es-DCtDU4od.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/MapPin.es-LuMrQgSA.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/Bicycle.es-bCcQ98k-.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/Car.es-BcRG2zDY.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/CaretDown.es-DyCd4XHv.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index-rFtIdZzG.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/CaretLeft.es-DPaczN1i.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/MagnifyingGlass.es-DPQgu94n.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index-CrlNZjav.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/Combination-Bux40UNW.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index-Dq5RVME9.js"><link rel="stylesheet" crossorigin="" href="./globals-DB2wY5gu.css"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index-NMqp09ek-D2t0jZQJ.js"><link rel="modulepreload" as="script" crossorigin="" href="./index-Dx1NHIbT.js.download"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/logo-control-CHapR1Dt-CEpYlRl6.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index-DscDx7HE-CTitksUx.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/maplibre-vendor-BwxN6ejj.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index-DKy2opdk-MuqiN2qx.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/utils-IAXGPK5I-DEJnuXZE.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index-Deqck8KU-DS50q_dN.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index-HWDZde-a-wsCxuIv7.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/IconBase.es-uNunWYuV.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index-C3Tj3r2u-OjDCidrG.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/HouseLine.es-DzuuPUaF.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/index-zqYpD_YN-DsAFfcNK.js"><link rel="modulepreload" as="script" crossorigin="" href="https://sdk.locallogic.co/sdks-app/v1/assets/styles-J872R1eq-CeOH7a4J.js"></head>
+
+<body style="overflow: hidden; margin: 0;">
+  <div id="root"><div class="relative bg-base-white w-full h-screen flex flex-col"><div class="relative w-full overflow-hidden grow"><div class="w-full h-full relative overflow-hidden" data-testid="base-map" data-map-provider-name="maptiler" data-map-provider-theme="600d69cb-288d-445e-9839-3dfe4d76b31a" data-initial-zoom="20" data-pitch="0" data-bearing="0" data-cooperative-gestures="false" data-zoom-position="bottom-right" data-center-latitude="45.553202" data-center-longitude="-73.611109"><div class="maplibregl-map" style="position: relative; width: 100%; height: 100%;"><div class="maplibregl-canvas-container maplibregl-interactive maplibregl-touch-drag-pan maplibregl-touch-zoom-rotate"><canvas class="maplibregl-canvas" tabindex="0" aria-label="Carte" role="region" width="1260" height="452" style="width: 1260px; height: 452px;"></canvas><div class="maplibregl-marker maplibregl-marker-anchor-bottom relative flex items-center justify-center z-10 w-fit max-sm:[&amp;&gt;#center-pin-background]:text-primary-50" aria-label="Marqueur de carte" role="button" style="transform: translate(-50%, -100%) translate(630px, 226px) rotateX(0deg) rotateZ(0deg);"><span id="center-pin-background" class="text-primary-100"><svg width="34" height="41" viewBox="0 0 34 41" fill="inherit" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M17 0C26.3888 0 34 7.61116 34 17C34 24.1987 29.5256 30.3524 23.2061 32.8316L17.9683 39.991C17.8591 40.1409 17.7141 40.2632 17.5456 40.3476C17.377 40.4321 17.1899 40.4762 17 40.4762C16.8101 40.4762 16.623 40.4321 16.4544 40.3476C16.2859 40.2632 16.1409 40.1409 16.0317 39.991L10.7939 32.8316C4.47445 30.3524 0 24.1987 0 17C0 7.61116 7.61116 0 17 0Z" fill="currentColor"></path></svg></span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" id="center-pin-icon" class="
+  w-5 h-5 fill-base-white
+  absolute top-1.5 left-1/2 transform -translate-x-1/2
+"><path d="M240,208H224V136l2.34,2.34A8,8,0,0,0,237.66,127L139.31,28.68a16,16,0,0,0-22.62,0L18.34,127a8,8,0,0,0,11.32,11.31L32,136v72H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM48,120l80-80,80,80v88H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48Zm96,88H112V160h32Z"></path></svg></div></div><div class="maplibregl-control-container"><div class="maplibregl-ctrl-top-left "></div><div class="maplibregl-ctrl-top-right "></div><div class="maplibregl-ctrl-bottom-left "></div><div class="maplibregl-ctrl-bottom-right "><div class="maplibregl-ctrl maplibregl-ctrl-group"><button class="maplibregl-ctrl-zoom-in" type="button" title="Zoomer" aria-label="Zoomer" disabled="" aria-disabled="true"><span class="maplibregl-ctrl-icon" aria-hidden="true"></span></button><button class="maplibregl-ctrl-zoom-out" type="button" title="Dézoomer" aria-label="Dézoomer" aria-disabled="false"><span class="maplibregl-ctrl-icon" aria-hidden="true"></span></button><button class="maplibregl-ctrl-compass" type="button" title="Réinitialiser l’orientation au nord" aria-label="Réinitialiser l’orientation au nord"><span class="maplibregl-ctrl-icon" aria-hidden="true" style="transform: rotate(0deg);"></span></button></div><details class="maplibregl-ctrl maplibregl-ctrl-attrib maplibregl-compact maplibregl-compact-show" open=""><summary class="maplibregl-ctrl-attrib-button" title="Afficher/Masquer l’attribution" aria-label="Afficher/Masquer l’attribution"></summary><div class="maplibregl-ctrl-attrib-inner"><a href="https://maplibre.org/" target="_blank">MapLibre</a></div></details></div></div><div mapboxgl-children="" style="height: 100%;"></div></div></div><div class="
+  group/sidebar flex flex-col z-10
+  bg-base-white rounded
+  overflow-hidden max-h-[calc(100vh-72px)] min-h-96
+  absolute top-3 left-3
+  w-full max-w-72 shadow-3sm
+  transition-all duration-150 ease-in-out
+
+  data-[is-expanded=false]:w-14
+
+  hover:data-[is-expanded=false]:w-16
+  hover:data-[is-expanded=false]:cursor-pointer
+" data-is-expanded="true" data-testid="sidebar"><div class="
+  h-14 p-4 flex justify-between items-center shadow-sm shrink-0
+  group-data-[is-expanded=false]/sidebar:justify-end
+" data-testid="sidebar-header"><h2 class="
+  text-sm text-base-black text-nowrap font-bold truncate
+  w-full m-0 justify-self-start overflow-hidden
+" aria-label="Catégories" data-testid="sidebar-header-title">Catégories</h2><button type="button" aria-label="Fermer le menu des scores" aria-pressed="true" data-testid="sidebar-header-toggle"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="w-5 h-5 mx-0.5 group-data-[is-expanded=false]/sidebar:rotate-180 transition-transform duration-200 delay-100 ease-in-out flex self-right" aria-hidden="true" focusable="false" data-testid="sidebar-header-toggle-icon"><path d="M205.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L131.31,128ZM51.31,128l74.35-74.34a8,8,0,0,0-11.32-11.32l-80,80a8,8,0,0,0,0,11.32l80,80a8,8,0,0,0,11.32-11.32Z"></path></svg></button></div><div class="
+  relative h-full overflow-x-hidden overflow-y-scroll
+
+  group-data-[is-expanded=false]/sidebar:overflow-y-hidden
+" data-testid="sidebar-container"><div class="
+  p-4 flex flex-col grow h-full overflow-hidden
+" data-testid="sidebar-content"><div class="flex flex-col mb-2" data-testid="sidebar-category" data-category="amenities"><h3 class="text-xs font-normal text-gray-400 m-0 group-data-[is-expanded=false]/sidebar:invisible" data-testid="category-title" data-category-key="amenities">Services</h3><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Magasins" data-background-color="#FFF2C3" data-fill-color="#BF8500" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="shopping" style="--item-button-background: #FFF2C3; --item-button-fill: #BF8500;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#FFF2C3" data-fill-color="#BF8500" style="--background: #FFF2C3; --fill: #BF8500;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M236,69.4A16.13,16.13,0,0,0,223.92,64H176a48,48,0,0,0-96,0H32.08a16.13,16.13,0,0,0-12,5.4,16,16,0,0,0-3.92,12.48l14.26,120a16,16,0,0,0,16,14.12H209.67a16,16,0,0,0,16-14.12l14.26-120A16,16,0,0,0,236,69.4ZM128,32a32,32,0,0,1,32,32H96A32,32,0,0,1,128,32Zm81.76,168a.13.13,0,0,1-.09,0H46.25L32.08,80H80v24a8,8,0,0,0,16,0V80h64v24a8,8,0,0,0,16,0V80h48Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Magasins</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Épiceries" data-background-color="#FFF2C3" data-fill-color="#BF8500" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="groceries" style="--item-button-background: #FFF2C3; --item-button-fill: #BF8500;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#FFF2C3" data-fill-color="#BF8500" style="--background: #FFF2C3; --fill: #BF8500;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M232,96a7.89,7.89,0,0,0-.3-2.2L217.35,43.6A16.07,16.07,0,0,0,202,32H54A16.07,16.07,0,0,0,38.65,43.6L24.31,93.8A7.89,7.89,0,0,0,24,96h0v16a40,40,0,0,0,16,32v72a8,8,0,0,0,8,8H208a8,8,0,0,0,8-8V144a40,40,0,0,0,16-32V96ZM54,48H202l11.42,40H42.61Zm50,56h48v8a24,24,0,0,1-48,0Zm-16,0v8a24,24,0,0,1-35.12,21.26,7.88,7.88,0,0,0-1.82-1.06A24,24,0,0,1,40,112v-8ZM200,208H56V151.2a40.57,40.57,0,0,0,8,.8,40,40,0,0,0,32-16,40,40,0,0,0,64,0,40,40,0,0,0,32,16,40.57,40.57,0,0,0,8-.8Zm4.93-75.8a8.08,8.08,0,0,0-1.8,1.05A24,24,0,0,1,168,112v-8h48v8A24,24,0,0,1,204.93,132.2Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Épiceries</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Restaurants" data-background-color="#FFF2C3" data-fill-color="#BF8500" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="restaurants" style="--item-button-background: #FFF2C3; --item-button-fill: #BF8500;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#FFF2C3" data-fill-color="#BF8500" style="--background: #FFF2C3; --fill: #BF8500;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M72,88V40a8,8,0,0,1,16,0V88a8,8,0,0,1-16,0ZM216,40V224a8,8,0,0,1-16,0V176H152a8,8,0,0,1-8-8,268.75,268.75,0,0,1,7.22-56.88c9.78-40.49,28.32-67.63,53.63-78.47A8,8,0,0,1,216,40ZM200,53.9c-32.17,24.57-38.47,84.42-39.7,106.1H200ZM119.89,38.69a8,8,0,1,0-15.78,2.63L112,88.63a32,32,0,0,1-64,0l7.88-47.31a8,8,0,1,0-15.78-2.63l-8,48A8.17,8.17,0,0,0,32,88a48.07,48.07,0,0,0,40,47.32V224a8,8,0,0,0,16,0V135.32A48.07,48.07,0,0,0,128,88a8.17,8.17,0,0,0-.11-1.31Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Restaurants</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Cafés" data-background-color="#FFF2C3" data-fill-color="#BF8500" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="cafes" style="--item-button-background: #FFF2C3; --item-button-fill: #BF8500;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#FFF2C3" data-fill-color="#BF8500" style="--background: #FFF2C3; --fill: #BF8500;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M80,56V24a8,8,0,0,1,16,0V56a8,8,0,0,1-16,0Zm40,8a8,8,0,0,0,8-8V24a8,8,0,0,0-16,0V56A8,8,0,0,0,120,64Zm32,0a8,8,0,0,0,8-8V24a8,8,0,0,0-16,0V56A8,8,0,0,0,152,64Zm96,56v8a40,40,0,0,1-37.51,39.91,96.59,96.59,0,0,1-27,40.09H208a8,8,0,0,1,0,16H32a8,8,0,0,1,0-16H56.54A96.3,96.3,0,0,1,24,136V88a8,8,0,0,1,8-8H208A40,40,0,0,1,248,120ZM200,96H40v40a80.27,80.27,0,0,0,45.12,72h69.76A80.27,80.27,0,0,0,200,136Zm32,24a24,24,0,0,0-16-22.62V136a95.78,95.78,0,0,1-1.2,15A24,24,0,0,0,232,128Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Cafés</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button></div><div class="flex flex-col mb-2" data-testid="sidebar-category" data-category="education"><h3 class="text-xs font-normal text-gray-400 m-0 group-data-[is-expanded=false]/sidebar:invisible" data-testid="category-title" data-category-key="education">Éducation</h3><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Garderies" data-background-color="#E4EFFF" data-fill-color="#003548" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="daycares" style="--item-button-background: #E4EFFF; --item-button-fill: #003548;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#E4EFFF" data-fill-color="#003548" style="--background: #E4EFFF; --fill: #003548;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M92,140a12,12,0,1,1,12-12A12,12,0,0,1,92,140Zm72-24a12,12,0,1,0,12,12A12,12,0,0,0,164,116Zm-12.27,45.23a45,45,0,0,1-47.46,0,8,8,0,0,0-8.54,13.54,61,61,0,0,0,64.54,0,8,8,0,0,0-8.54-13.54ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88.11,88.11,0,0,0-84.09-87.91C120.32,56.38,120,71.88,120,72a8,8,0,0,0,16,0,8,8,0,0,1,16,0,24,24,0,0,1-48,0c0-.73.13-14.3,8.46-30.63A88,88,0,1,0,216,128Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Garderies</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Écoles primaires" data-background-color="#E4EFFF" data-fill-color="#003548" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="primary_schools" style="--item-button-background: #E4EFFF; --item-button-fill: #003548;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#E4EFFF" data-fill-color="#003548" style="--background: #E4EFFF; --fill: #003548;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M168,40.58V32A24,24,0,0,0,144,8H112A24,24,0,0,0,88,32v8.58A56.09,56.09,0,0,0,40,96V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V96A56.09,56.09,0,0,0,168,40.58ZM112,24h32a8,8,0,0,1,8,8v8H104V32A8,8,0,0,1,112,24Zm56,136H88v-8a8,8,0,0,1,8-8h64a8,8,0,0,1,8,8ZM88,176h48v8a8,8,0,0,0,16,0v-8h16v40H88Zm112,40H184V152a24,24,0,0,0-24-24H96a24,24,0,0,0-24,24v64H56V96A40,40,0,0,1,96,56h64a40,40,0,0,1,40,40V216ZM152,88a8,8,0,0,1-8,8H112a8,8,0,0,1,0-16h32A8,8,0,0,1,152,88Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Écoles primaires</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Écoles secondaires" data-background-color="#E4EFFF" data-fill-color="#003548" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="high_schools" style="--item-button-background: #E4EFFF; --item-button-fill: #003548;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#E4EFFF" data-fill-color="#003548" style="--background: #E4EFFF; --fill: #003548;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M251.76,88.94l-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216a130,130,0,0,0,48-8.76V240a8,8,0,0,0,16,0V199.51a115.63,115.63,0,0,0,27.94-22.57A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12ZM128,200c-43.27,0-68.72-21.14-80-33.71V126.4l76.24,40.66a8,8,0,0,0,7.52,0L176,143.47v46.34C163.4,195.69,147.52,200,128,200Zm80-33.75a97.83,97.83,0,0,1-16,14.25V134.93l16-8.53ZM188,118.94l-.22-.13-56-29.87a8,8,0,0,0-7.52,14.12L171,128l-43,22.93L25,96,128,41.07,231,96Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Écoles secondaires</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button></div><div class="flex flex-col mb-2" data-testid="sidebar-category" data-category="transport"><h3 class="text-xs font-normal text-gray-400 m-0 group-data-[is-expanded=false]/sidebar:invisible" data-testid="category-title" data-category-key="transport">Transport</h3><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Transport public" data-background-color="#E9F8FA" data-fill-color="#008491" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="transit_friendly" style="--item-button-background: #E9F8FA; --item-button-fill: #008491;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#E9F8FA" data-fill-color="#008491" style="--background: #E9F8FA; --fill: #008491;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M224,96V208a8,8,0,0,1-16,0V96a56.06,56.06,0,0,0-56-56H104A56.06,56.06,0,0,0,48,96V208a8,8,0,0,1-16,0V96a72.08,72.08,0,0,1,72-72h48A72.08,72.08,0,0,1,224,96Zm-40,0v72a24,24,0,0,1-19.29,23.53l2.45,4.89a8,8,0,0,1-14.32,7.16L147.06,192H108.94l-5.78,11.58a8,8,0,0,1-14.32-7.16l2.45-4.89A24,24,0,0,1,72,168V96A24,24,0,0,1,96,72h64A24,24,0,0,1,184,96ZM88,96v48h80V96a8,8,0,0,0-8-8H96A8,8,0,0,0,88,96Zm32,64v16h16V160ZM96,176h8V160H88v8A8,8,0,0,0,96,176Zm72-8v-8H152v16h8A8,8,0,0,0,168,168Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Transport public</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Adapté aux voitures" data-background-color="#E9F8FA" data-fill-color="#008491" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="car_friendly" style="--item-button-background: #E9F8FA; --item-button-fill: #008491;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#E9F8FA" data-fill-color="#008491" style="--background: #E9F8FA; --fill: #008491;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M240,104H229.2L201.42,41.5A16,16,0,0,0,186.8,32H69.2a16,16,0,0,0-14.62,9.5L26.8,104H16a8,8,0,0,0,0,16h8v80a16,16,0,0,0,16,16H64a16,16,0,0,0,16-16V184h96v16a16,16,0,0,0,16,16h24a16,16,0,0,0,16-16V120h8a8,8,0,0,0,0-16ZM69.2,48H186.8l24.89,56H44.31ZM64,200H40V184H64Zm128,0V184h24v16Zm24-32H40V120H216ZM56,144a8,8,0,0,1,8-8H80a8,8,0,0,1,0,16H64A8,8,0,0,1,56,144Zm112,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H176A8,8,0,0,1,168,144Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Adapté aux voitures</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Adapté aux piétons" data-background-color="#E9F8FA" data-fill-color="#008491" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="pedestrian_friendly" style="--item-button-background: #E9F8FA; --item-button-fill: #008491;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#E9F8FA" data-fill-color="#008491" style="--background: #E9F8FA; --fill: #008491;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M152,80a32,32,0,1,0-32-32A32,32,0,0,0,152,80Zm0-48a16,16,0,1,1-16,16A16,16,0,0,1,152,32Zm64,112a8,8,0,0,1-8,8c-35.31,0-52.95-17.81-67.12-32.12-2.74-2.77-5.36-5.4-8-7.84l-13.43,30.88,37.2,26.57A8,8,0,0,1,160,176v56a8,8,0,0,1-16,0V180.12l-31.07-22.2L79.34,235.19A8,8,0,0,1,72,240a7.84,7.84,0,0,1-3.19-.67,8,8,0,0,1-4.15-10.52l54.08-124.37c-9.31-1.65-20.92,1.2-34.7,8.58a163.88,163.88,0,0,0-30.57,21.77,8,8,0,0,1-10.95-11.66c2.5-2.35,61.69-57.23,98.72-25.08,3.83,3.32,7.48,7,11,10.57C166.19,122.7,179.36,136,208,136A8,8,0,0,1,216,144Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Adapté aux piétons</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Adapté aux cyclistes" data-background-color="#E9F8FA" data-fill-color="#008491" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="cycling_friendly" style="--item-button-background: #E9F8FA; --item-button-fill: #008491;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#E9F8FA" data-fill-color="#008491" style="--background: #E9F8FA; --fill: #008491;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M208,112a47.81,47.81,0,0,0-16.93,3.09L165.93,72H192a8,8,0,0,1,8,8,8,8,0,0,0,16,0,24,24,0,0,0-24-24H152a8,8,0,0,0-6.91,12l11.65,20H99.26L82.91,60A8,8,0,0,0,76,56H48a8,8,0,0,0,0,16H71.41L85.12,95.51,69.41,117.06a48.13,48.13,0,1,0,12.92,9.44l11.59-15.9L125.09,164A8,8,0,1,0,138.91,156l-30.32-52h57.48l11.19,19.17A48,48,0,1,0,208,112ZM80,160a32,32,0,1,1-20.21-29.74l-18.25,25a8,8,0,1,0,12.92,9.42l18.25-25A31.88,31.88,0,0,1,80,160Zm128,32a32,32,0,0,1-22.51-54.72L201.09,164A8,8,0,1,0,214.91,156L199.3,129.21A32,32,0,1,1,208,192Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Adapté aux cyclistes</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button></div><div class="flex flex-col mb-2" data-testid="sidebar-category" data-category="character"><h3 class="text-xs font-normal text-gray-400 m-0 group-data-[is-expanded=false]/sidebar:invisible" data-testid="category-title" data-category-key="character">Caractère</h3><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Vie nocturne" data-background-color="#FFDAAC" data-fill-color="#FF7044" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="nightlife" style="--item-button-background: #FFDAAC; --item-button-fill: #FF7044;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#FFDAAC" data-fill-color="#FF7044" style="--background: #FFDAAC; --fill: #FF7044;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M237.66,45.66A8,8,0,0,0,232,32H24a8,8,0,0,0-5.66,13.66L120,147.31V208H88a8,8,0,0,0,0,16h80a8,8,0,0,0,0-16H136V147.31ZM43.31,48H212.69l-16,16H59.31ZM128,132.69,75.31,80H180.69Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Vie nocturne</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Dynamisme" data-background-color="#FFDAAC" data-fill-color="#FF7044" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="vibrant" style="--item-button-background: #FFDAAC; --item-button-fill: #FF7044;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#FFDAAC" data-fill-color="#FF7044" style="--background: #FFDAAC; --fill: #FF7044;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M120,64.37V16a8,8,0,0,0-16,0V64.37a88,88,0,1,0,16,0ZM183.54,144H151.77c-1.51-28.36-10.79-48.36-19.44-61.06A72.16,72.16,0,0,1,183.54,144Zm-95.3,16h47.52c-2,33.52-16.13,52.95-23.76,61.08C104.36,212.93,90.23,193.51,88.24,160Zm0-16c2-33.52,16.13-52.95,23.76-61.08,7.64,8.15,21.77,27.57,23.76,61.08Zm3.43-61.06C83,95.64,73.74,115.64,72.23,144H40.46A72.16,72.16,0,0,1,91.67,82.94ZM40.46,160H72.23c1.51,28.36,10.79,48.36,19.44,61.06A72.16,72.16,0,0,1,40.46,160Zm91.87,61.06c8.65-12.7,17.93-32.7,19.44-61.06h31.77A72.16,72.16,0,0,1,132.33,221.06ZM256,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,256,88ZM152,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H192V64a8,8,0,0,1-16,0V48H160A8,8,0,0,1,152,40Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Dynamisme</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Historique" data-background-color="#FFDAAC" data-fill-color="#FF7044" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="historic" style="--item-button-background: #FFDAAC; --item-button-fill: #FF7044;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#FFDAAC" data-fill-color="#FF7044" style="--background: #FFDAAC; --fill: #FF7044;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M24,104H48v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16H208V104h24a8,8,0,0,0,4.19-14.81l-104-64a8,8,0,0,0-8.38,0l-104,64A8,8,0,0,0,24,104Zm40,0H96v64H64Zm80,0v64H112V104Zm48,64H160V104h32ZM128,41.39,203.74,88H52.26ZM248,208a8,8,0,0,1-8,8H16a8,8,0,0,1,0-16H240A8,8,0,0,1,248,208Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Historique</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Silencieux" data-background-color="#FFDAAC" data-fill-color="#FF7044" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="quiet" style="--item-button-background: #FFDAAC; --item-button-fill: #FF7044;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#FFDAAC" data-fill-color="#FF7044" style="--background: #FFDAAC; --fill: #FF7044;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M192,152V104a8,8,0,0,1,16,0v48a8,8,0,0,1-16,0Zm40-72a8,8,0,0,0-8,8v80a8,8,0,0,0,16,0V88A8,8,0,0,0,232,80ZM221.92,210.62a8,8,0,1,1-11.84,10.76L168,175.09V224a8,8,0,0,1-12.91,6.31L85.25,176H40a16,16,0,0,1-16-16V96A16,16,0,0,1,40,80H81.55L50.08,45.38A8,8,0,0,1,61.92,34.62ZM152,157.49,96.1,96H40v64H88a7.94,7.94,0,0,1,4.91,1.69L152,207.64ZM125.06,69.31l26.94-21v58.47a8,8,0,0,0,16,0V32a8,8,0,0,0-12.91-6.31l-39.85,31a8,8,0,0,0,9.82,12.63Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Silencieux</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button></div><div class="flex flex-col mb-2" data-testid="sidebar-category" data-category="nature"><h3 class="text-xs font-normal text-gray-400 m-0 group-data-[is-expanded=false]/sidebar:invisible" data-testid="category-title" data-category-key="nature">Nature</h3><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Parcs" data-background-color="#D8F4D9" data-fill-color="#0F766E" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="parks" style="--item-button-background: #D8F4D9; --item-button-fill: #0F766E;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#D8F4D9" data-fill-color="#0F766E" style="--background: #D8F4D9; --fill: #0F766E;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M198.1,62.59a76,76,0,0,0-140.2,0A71.71,71.71,0,0,0,16,127.8C15.9,166,48,199,86.14,200A72.09,72.09,0,0,0,120,192.47V232a8,8,0,0,0,16,0V192.47A72.17,72.17,0,0,0,168,200l1.82,0C208,199,240.11,166,240,127.8A71.71,71.71,0,0,0,198.1,62.59ZM169.45,184a56.08,56.08,0,0,1-33.45-10v-41l43.58-21.78a8,8,0,1,0-7.16-14.32L136,115.06V88a8,8,0,0,0-16,0v51.06L83.58,120.84a8,8,0,1,0-7.16,14.32L120,156.94v17a56,56,0,0,1-33.45,10C56.9,183.23,31.92,157.52,32,127.84A55.77,55.77,0,0,1,67.11,76a8,8,0,0,0,4.53-4.67,60,60,0,0,1,112.72,0A8,8,0,0,0,188.89,76,55.79,55.79,0,0,1,224,127.84C224.08,157.52,199.1,183.23,169.45,184Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Parcs</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Verdure" data-background-color="#D8F4D9" data-fill-color="#0F766E" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="greenery" style="--item-button-background: #D8F4D9; --item-button-fill: #0F766E;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#D8F4D9" data-fill-color="#0F766E" style="--background: #D8F4D9; --fill: #0F766E;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M247.63,47.89a8,8,0,0,0-7.52-7.52c-51.76-3-93.32,12.74-111.18,42.22-11.8,19.49-11.78,43.16-.16,65.74a71.34,71.34,0,0,0-14.17,27L98.33,159c7.82-16.33,7.52-33.35-1-47.49-13.2-21.79-43.67-33.47-81.5-31.25a8,8,0,0,0-7.52,7.52c-2.23,37.83,9.46,68.3,31.25,81.5A45.82,45.82,0,0,0,63.44,176,54.58,54.58,0,0,0,87,170.33l25,25V224a8,8,0,0,0,16,0V194.51a55.61,55.61,0,0,1,12.27-35,73.91,73.91,0,0,0,33.31,8.4,60.9,60.9,0,0,0,31.83-8.86C234.89,141.21,250.67,99.65,247.63,47.89ZM47.81,155.6C32.47,146.31,23.79,124.32,24,96c28.32-.24,50.31,8.47,59.6,23.81,4.85,8,5.64,17.33,2.46,26.94L61.65,122.34a8,8,0,0,0-11.31,11.31l24.41,24.41C65.14,161.24,55.82,160.45,47.81,155.6Zm149.31-10.22c-13.4,8.11-29.15,8.73-45.15,2l53.69-53.7a8,8,0,0,0-11.31-11.31L140.65,136c-6.76-16-6.15-31.76,2-45.15,13.94-23,47-35.82,89.33-34.83C232.94,98.34,220.14,131.44,197.12,145.38Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Verdure</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button></div><div class="flex flex-col mb-2" data-testid="sidebar-category" data-category="health"><h3 class="text-xs font-normal text-gray-400 m-0 group-data-[is-expanded=false]/sidebar:invisible" data-testid="category-title" data-category-key="health">Santé</h3><button class="
+  group/item-button group/color-icon flex justify-between items-center
+  text-sm font-normal text-gray-800
+  w-full h-11 py-2
+
+  data-[is-collapsed=true]:pointer-events-none
+" aria-label="Bien-être" data-background-color="#FFE7FE" data-fill-color="#FF84D6" data-is-collapsed="false" data-is-active="false" data-testid="sidebar-score-item" data-score="wellness" style="--item-button-background: #FFE7FE; --item-button-fill: #FF84D6;"><span class="
+  p-1 rounded-full inline-flex items-center justify-center transition-colors
+
+  bg-[var(--background)]
+  group-hover/color-icon:bg-[var(--fill)]
+  group-data-[is-active=true]/color-icon:bg-[var(--fill)]
+
+  sm:p-1.5
+" data-testid="icon-background" data-background-color="#FFE7FE" data-fill-color="#FF84D6" style="--background: #FFE7FE; --fill: #FF84D6;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="
+  w-3.5 h-3.5 transition-colors
+
+  fill-[var(--fill)]
+  group-hover/color-icon:fill-base-white
+  group-data-[is-active=true]/color-icon:fill-base-white
+" aria-hidden="true" data-testid="icon"><path d="M245.83,121.63a15.53,15.53,0,0,0-9.52-7.33,73.51,73.51,0,0,0-22.17-2.22c4-19.85,1-35.55-2.06-44.86a16.15,16.15,0,0,0-18.79-10.88,85.53,85.53,0,0,0-28.55,12.12,94.58,94.58,0,0,0-27.11-33.25,16.05,16.05,0,0,0-19.26,0A94.48,94.48,0,0,0,91.26,68.46,85.53,85.53,0,0,0,62.71,56.34,16.15,16.15,0,0,0,43.92,67.22c-3,9.31-6,25-2.06,44.86a73.51,73.51,0,0,0-22.17,2.22,15.53,15.53,0,0,0-9.52,7.33,16,16,0,0,0-1.6,12.27c3.39,12.57,13.8,36.48,45.33,55.32S113.13,208,128.05,208s42.67,0,74-18.78c31.53-18.84,41.94-42.75,45.33-55.32A16,16,0,0,0,245.83,121.63ZM59.14,72.14a.2.2,0,0,1,.23-.15A70.43,70.43,0,0,1,85.18,83.66,118.65,118.65,0,0,0,80,119.17c0,18.74,3.77,34,9.11,46.28A123.59,123.59,0,0,1,69.57,140C51.55,108.62,55.3,84,59.14,72.14Zm3,103.35C35.47,159.57,26.82,140.05,24,129.7a59.82,59.82,0,0,1,22.5-1.17,129.08,129.08,0,0,0,9.15,19.41,142.28,142.28,0,0,0,34,39.56A114.92,114.92,0,0,1,62.1,175.49ZM128,190.4c-9.33-6.94-32-28.23-32-71.23C96,76.7,118.38,55.24,128,48c9.62,7.26,32,28.72,32,71.19C160,162.17,137.33,183.46,128,190.4ZM170.82,83.66A70.43,70.43,0,0,1,196.63,72a.2.2,0,0,1,.23.15C200.7,84,204.45,108.62,186.43,140a123.32,123.32,0,0,1-19.54,25.48c5.34-12.26,9.11-27.54,9.11-46.28A118.65,118.65,0,0,0,170.82,83.66ZM232,129.72c-2.77,10.25-11.4,29.81-38.09,45.77a114.92,114.92,0,0,1-27.55,12,142.28,142.28,0,0,0,34-39.56,129.08,129.08,0,0,0,9.15-19.41A59.69,59.69,0,0,1,232,129.71Z"></path></svg></span><span class="grow text-left text-nowrap px-2 group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:text-base-black -mt-0.5">Bien-être</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 256 256" class="group-data-[is-collapsed=true]/item-button:invisible group-hover/item-button:scale-125" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></button></div></div></div><div class="flex flex-col transition-transform duration-15 ease-in-out data-[direction=&quot;right-to-left&quot;]:translate-x-full data-[direction=&quot;left-to-right&quot;]:-translate-x-full data-[direction=&quot;bottom-to-top&quot;]:translate-y-full data-[direction=&quot;top-to-bottom&quot;]:-translate-y-full data-[direction=&quot;right-to-left&quot;]:data-[is-open=true]:translate-x-0 data-[direction=&quot;left-to-right&quot;]:data-[is-open=true]:translate-x-0 data-[direction=&quot;bottom-to-top&quot;]:data-[is-open=true]:translate-y-0 data-[direction=&quot;top-to-bottom&quot;]:data-[is-open=true]:translate-y-0 absolute top-14 left-0 bottom-0 h-auto w-full bg-base-white p-4 overflow-y-auto" data-testid="slider" data-is-open="false" data-direction="right-to-left"><div class="flex flex-col data-[is-visible=false]:hidden" data-testid="sidebar-score-details" data-is-visible="true"></div></div></div><div class="
+  absolute max-sm:bottom-16 max-sm:left-2 sm:top-3 sm:right-3 flex gap-x-2 items-center justify-end
+"><button class="group justify-center font-medium no-underline px-5 rounded-xl flex items-center gap-2 transition-all min-w-fit disabled:pointer-events-none data-[is-disabled=true]:pointer-events-none data-[size=&quot;medium&quot;]:h-12 data-[size=&quot;large&quot;]:h-16 data-[variant=&quot;primary&quot;]:bg-primary-100 data-[variant=&quot;primary&quot;]:text-white data-[variant=&quot;primary&quot;]:hover:bg-primary-200 data-[variant=&quot;primary&quot;]:disabled:bg-gray-250 data-[variant=&quot;primary&quot;]:data-[is-disabled=true]:bg-gray-250 data-[variant=&quot;primary&quot;]:data-[inverse=true]:bg-white data-[variant=&quot;primary&quot;]:data-[inverse=true]:text-primary-100 data-[variant=&quot;primary&quot;]:data-[inverse=true]:hover:bg-white data-[variant=&quot;primary&quot;]:data-[inverse=true]:hover:text-primary-200 data-[variant=&quot;primary&quot;]:data-[inverse=true]:disabled:bg-gray-200 data-[variant=&quot;primary&quot;]:data-[inverse=true]:disabled:text-white data-[variant=&quot;primary&quot;]:data-[inverse=true]:data-[is-disabled=true]:bg-gray-200 data-[variant=&quot;primary&quot;]:data-[inverse=true]:data-[is-disabled=true]:text-white data-[variant=&quot;secondary&quot;]:border data-[variant=&quot;secondary&quot;]:border-solid data-[variant=&quot;secondary&quot;]:border-gray-150 data-[variant=&quot;secondary&quot;]:text-primary-100 data-[variant=&quot;secondary&quot;]:hover:border-primary-50 data-[variant=&quot;secondary&quot;]:hover:text-primary-50 data-[variant=&quot;secondary&quot;]:disabled:text-gray-250 data-[variant=&quot;secondary&quot;]:disabled:border-gray-250 data-[variant=&quot;secondary&quot;]:data-[is-disabled=true]:text-gray-250 data-[variant=&quot;secondary&quot;]:data-[is-disabled=true]:border-gray-250 data-[variant=&quot;secondary&quot;]:data-[inverse=true]:text-white data-[variant=&quot;secondary&quot;]:data-[inverse=true]:border-white data-[variant=&quot;ghost&quot;]:text-primary-100 data-[variant=&quot;ghost&quot;]:hover:text-primary-50 data-[variant=&quot;ghost&quot;]:disabled:text-gray-250 data-[variant=&quot;ghost&quot;]:data-[is-disabled=true]:text-gray-250 data-[variant=&quot;ghost&quot;]:data-[inverse=true]:text-white z-10 sm:rounded text-sm h-10 data-[is-active=true]:bg-primary-200 max-sm:rounded-full max-sm:w-10 max-sm:px-0 max-sm:!bg-primary-50 max-sm:hover:!bg-primary-100" data-variant="primary" data-size="small" data-inverse="false" type="button" data-testid="commute-calculator-trigger" data-is-active="false"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="w-5 h-5"><path d="M243.15,116.29,139.71,12.85a16.56,16.56,0,0,0-23.42,0L12.85,116.29a16.56,16.56,0,0,0,0,23.42L116.29,243.15h0a16.56,16.56,0,0,0,23.42,0L243.15,139.71a16.56,16.56,0,0,0,0-23.42Zm-11.31,12.1L128.4,231.84a.58.58,0,0,1-.8,0h0L24.16,128.39a.56.56,0,0,1,0-.78L127.6,24.16a.58.58,0,0,1,.8,0L231.84,127.61a.56.56,0,0,1,0,.78Zm-58.18-14a8,8,0,0,1,0,11.32l-24,24a8,8,0,0,1-11.32-11.32L148.69,128H112a16,16,0,0,0-16,16v8a8,8,0,0,1-16,0v-8a32,32,0,0,1,32-32h36.69l-10.35-10.34a8,8,0,0,1,11.32-11.32Z"></path></svg>Calculer le trajet</button></div></div><a class="max-w-full text-xs sm:text-base flex items-center gap-3 p-3 bg-base-white font-medium tracking-wider justify-end whitespace-nowrap data-[is-transparent=true]:bg-transparent h-10 sm:h-12" href="https://locallogic.co/fr/?utm_source=https%3A%2F%2Fwww.centris.ca%2F&amp;utm_medium=referral&amp;utm_campaign=local-content" target="_blank" rel="noreferrer" data-is-transparent="false">Propulsé par<div class="w-28 sm:w-40"><svg viewBox="0 0 251 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 0H0.5V29V37H9.5H23.5V29H9.5V0Z" fill="#216C81"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M26.5 38L35.5 38L35.5 9L35.5 1L26.5 0.999999L12.5 0.999998L12.5 9L26.5 9L26.5 38Z" fill="#54B1B5"></path><path d="M194.464 17.8332C194.421 23.7959 190.238 27.6974 184.487 27.41C181.003 27.2359 178.112 25.8773 176.507 22.6318C174.884 19.3514 174.957 16.0073 176.954 12.8895C178.681 10.1868 181.407 9.12436 184.484 9.03437C188.005 8.93276 191.074 9.97492 193.103 13.1072C194.102 14.6487 194.444 16.3759 194.464 17.8361V17.8332ZM189.947 18.2512C190.02 15.4499 188.217 13.2117 185.605 12.8576C183.012 12.5063 180.731 14.1087 180.115 16.7127C179.445 19.543 180.809 22.4228 183.221 23.2762C186.618 24.4752 189.849 22.0628 189.947 18.2512Z" fill="#205464"></path><path d="M66.5257 18.0974C66.5257 12.5237 70.555 8.80793 76.4712 9.03726C80.3495 9.18822 83.4847 10.7761 84.9071 14.608C87.1192 20.5649 83.7576 27.8397 75.3187 27.3868C69.9511 27.0994 66.5373 23.3807 66.5257 18.1003V18.0974ZM81.0433 17.9667C80.9301 16.1814 80.3002 14.5442 78.5787 13.5107C76.1344 12.0447 72.9702 12.9388 71.6639 15.4441C70.2095 18.2309 71.3155 21.9293 73.9572 23.1253C77.4262 24.6929 81.0869 22.0889 81.0404 17.9667H81.0433Z" fill="#205464"></path><path d="M212.55 23.1717V20.0714H209.351V16.7243H216.422V25.8802C214.73 26.8352 212.863 27.2242 210.939 27.3462C207.78 27.5494 204.84 26.9804 202.569 24.5535C199.951 21.7551 199.547 18.4167 200.683 14.9273C201.8 11.4874 204.442 9.70204 207.931 9.15048C210.28 8.7789 212.564 9.08662 214.701 10.1723C215.267 10.4597 215.769 10.8661 216.408 11.29C215.473 12.3582 214.643 13.3017 213.734 14.341C212.294 13.0027 210.614 12.5121 208.721 12.8575C207.612 13.0608 206.695 13.6152 205.954 14.4687C204.346 16.3266 204.192 19.6882 205.629 21.6796C207.002 23.5839 209.931 24.2487 212.547 23.1717H212.55Z" fill="#205464"></path><path d="M129.154 26.8904H124.483C124.039 25.8163 123.586 24.7248 123.119 23.5927H116.39C115.96 24.6755 115.525 25.7728 115.089 26.8672H110.517C112.964 21.0381 115.35 15.3454 117.763 9.59464H121.972C124.338 15.2902 126.707 20.9974 129.154 26.8904ZM119.94 14.5674C119.847 14.5616 119.757 14.5558 119.664 14.5529C118.994 16.3556 118.323 18.1612 117.615 20.0685H121.928C121.235 18.1525 120.587 16.3614 119.94 14.5674Z" fill="#205464"></path><path d="M107.37 24.4722C104.525 28.1764 97.8543 28.4232 94.0863 25.0383C90.2631 21.6041 90.2398 14.9738 94.063 11.4177C98.2113 7.55386 105.292 8.89793 107.071 11.4874C106.165 12.4134 105.266 13.3278 104.363 14.251C101.782 12.3118 98.9458 12.4018 97.1169 14.518C95.349 16.5617 95.3955 20.1149 97.2156 22.0222C99.1664 24.0658 101.913 24.0281 104.569 21.8509C105.498 22.7218 106.438 23.6014 107.373 24.4751L107.37 24.4722Z" fill="#205464"></path><path d="M247.736 21.8393C248.691 22.7479 249.603 23.613 250.5 24.4664C248.648 27.0646 244.343 28.1125 240.595 26.9514C236.801 25.7786 234.444 22.4605 234.371 18.1874C234.304 14.2132 236.606 10.8835 240.319 9.58302C243.913 8.32605 248.497 9.24048 250.305 11.6093C249.388 12.4598 248.468 13.3162 247.478 14.2365C246.282 13.1333 244.746 12.5876 242.947 12.9621C241.756 13.2088 240.795 13.8126 240.07 14.7764C238.444 16.9304 238.662 20.4023 240.523 22.1934C242.468 24.0629 245.054 23.9613 247.739 21.8393H247.736Z" fill="#205464"></path><path d="M160.358 26.8614V9.60625H164.576V23.2327H171.264V26.8585H160.358V26.8614Z" fill="#205464"></path><path d="M55.5903 23.2675H62.3483V26.873H51.5V9.61495H55.5903V23.2704V23.2675Z" fill="#205464"></path><path d="M134.449 9.58012H138.516V23.1978H145.213V26.844H134.449V9.58012Z" fill="#205464"></path><path d="M227.866 26.9456C226.751 26.9456 225.741 26.9514 224.733 26.9427C224.414 26.9427 224.095 26.902 223.709 26.8759V9.60915H227.866V26.9456Z" fill="#205464"></path></svg></div></a></div></div>
+  <script nomodule="">!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+  <script nomodule="" crossorigin="" id="vite-legacy-polyfill" src="./polyfills-legacy-BuXnv-Rd.js.download"></script>
+  <script nomodule="" crossorigin="" id="vite-legacy-entry" data-src="/sdks-app/v1/assets/index-legacy-Ck401PXa.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+
+
+</body></html>
