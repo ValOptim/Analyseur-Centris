@@ -64,13 +64,24 @@
 }
 
 #centris-analyseur-root th {
-  background: #f1f5f9;
+  background: #0f766e;
+  color: #ffffff;
   font-weight: 700;
+}
+
+#centris-analyseur-root a {
+  color: #0f766e;
+  text-decoration: underline;
 }
 
 #centris-analyseur-root td.value {
   text-align: right;
   font-variant-numeric: tabular-nums;
+}
+
+#centris-analyseur-root tr.row-total td {
+  background: #f3f4f6;
+  font-weight: 700;
 }
 
 #centris-analyseur-root .ca-ineligible {
@@ -120,5 +131,69 @@ body.ca-panel-open {
 
   #centris-analyseur-root {
     width: min(420px, 100vw);
+  }
+}
+
+#centris-analyseur-root .ca-footer {
+  padding: 10px 12px;
+  border-top: 1px solid #d1d5db;
+  background: #f1f5f9;
+}
+
+#centris-analyseur-root .ca-print {
+  width: 100%;
+  padding: 8px;
+  background: #0f766e;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#centris-analyseur-root .ca-print:hover {
+  background: #0d6460;
+}
+
+@media print {
+  body > *:not(#centris-analyseur-root) {
+    display: none !important;
+  }
+
+  #centris-analyseur-toggle {
+    display: none !important;
+  }
+
+  #centris-analyseur-root {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    box-shadow: none !important;
+  }
+
+  #centris-analyseur-root .ca-panel {
+    height: auto !important;
+    box-shadow: none !important;
+  }
+
+  #centris-analyseur-root .ca-content {
+    overflow: visible !important;
+  }
+
+  #centris-analyseur-root .ca-close,
+  #centris-analyseur-root .ca-footer {
+    display: none !important;
+  }
+
+  #centris-analyseur-root th {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #centris-analyseur-root a::after {
+    content: none !important;
   }
 }

@@ -233,8 +233,8 @@
     document.body.classList.toggle("ca-panel-open", state.open);
   }
 
-  function buildRow(label, value, cssClass) {
-    return `<tr><td>${label}</td><td class="value ${cssClass || ""}">${value}</td></tr>`;
+  function buildRow(label, value, trClass) {
+    return `<tr class="${trClass || ""}"><td>${label}</td><td class="value">${value}</td></tr>`;
   }
 
   function renderPanel(data) {
@@ -262,25 +262,48 @@
           <div class="ca-content">
             <div class="ca-ineligible">${eligibilityError}</div>
           </div>
+          <div class="ca-footer">
+            <button class="ca-print" type="button">Imprimer</button>
+          </div>
         </div>
       `;
       root.querySelector(".ca-close")?.addEventListener("click", () => {
         state.open = false;
         renderVisibleState();
       });
+      root.querySelector(".ca-print")?.addEventListener("click", () => window.print());
       renderVisibleState();
       return;
     }
 
     const analysis = computeAnalysis(data);
+    const unitCount = parseUnitCount(data.unitsText);
+    const pricePerUnit = unitCount ? data.askingPrice / unitCount : null;
 
-    const sectionsHtml = data.financialSections
+    const taxesSection = data.financialSections.find((s) => normalizeText(s.title).includes("taxes"));
+    const depensesSection = data.financialSections.find((s) => normalizeText(s.title).includes("depenses"));
+    const otherSections = data.financialSections.filter((s) => s !== taxesSection && s !== depensesSection);
+
+    const mergedDepenses = taxesSection || depensesSection
+      ? {
+          title: depensesSection?.title || taxesSection?.title,
+          items: [
+            ...(taxesSection?.items || []).map((item) => ({ ...item, name: `Taxes ${item.name.toLowerCase()}` })),
+            ...(depensesSection?.items || [])
+          ],
+          total: (taxesSection?.total ?? 0) + (depensesSection?.total ?? 0)
+        }
+      : null;
+
+    const sectionsToRender = [...(mergedDepenses ? [mergedDepenses] : []), ...otherSections];
+
+    const sectionsHtml = sectionsToRender
       .map((section) => `
         <table>
           <thead><tr><th colspan="2">${section.title}</th></tr></thead>
           <tbody>
             ${section.items.map((item) => buildRow(item.name, Number.isFinite(item.value) ? formatMoney(item.value) : item.raw)).join("")}
-            ${buildRow("Total", Number.isFinite(section.total) ? formatMoney(section.total) : "-")}
+            ${buildRow("Total", Number.isFinite(section.total) ? formatMoney(section.total) : "-", "row-total")}
           </tbody>
         </table>
       `)
@@ -296,27 +319,24 @@
           <table>
             <thead><tr><th colspan="2">Résumé</th></tr></thead>
             <tbody>
-              ${buildRow("N° Centris", data.listingId)}
-              ${buildRow("Type", data.title || "-")}
+              ${buildRow("N° Centris", `<a href="${window.location.href}" target="_blank">${data.listingId}</a>`)}
+              <!-- ${buildRow("Type", data.title || "-")} -->
               ${buildRow("Adresse", data.address || "-")}
               ${buildRow("Prix demandé", formatMoney(data.askingPrice))}
-              ${buildRow("Usage", data.usageText || "-")}
-              ${buildRow("Nombre d'unités", data.unitsText || "-")}
+              ${buildRow("Prix par unité", Number.isFinite(pricePerUnit) ? formatMoney(pricePerUnit) : "-")}
+              <!-- ${buildRow("Usage", data.usageText || "-")} -->
+              ${buildRow("Nombre d'unités", unitCount ?? "-")}
               ${buildRow("Unités résidentielles", data.unitsResText || "-")}
               ${buildRow("Revenus bruts potentiels", Number.isFinite(data.grossPotential) ? formatMoney(data.grossPotential) : "-")}
             </tbody>
           </table>
 
           <table>
-            <thead><tr><th colspan="2">Calculs</th></tr></thead>
+            <thead><tr><th colspan="2">Indicateurs</th></tr></thead>
             <tbody>
-              ${buildRow("Taxes annuelles", Number.isFinite(data.taxes) ? formatMoney(data.taxes) : "-")}
-              ${buildRow("Dépenses annuelles", Number.isFinite(data.operatingExpenses) ? formatMoney(data.operatingExpenses) : "-")}
-              ${buildRow("Normalisation SCHL (est.)", Number.isFinite(analysis.schlNorm) ? formatMoney(analysis.schlNorm) : "-")}
-              ${buildRow("Revenu net normalisé", Number.isFinite(analysis.netIncome) ? formatMoney(analysis.netIncome) : "-")}
               ${buildRow("MRB", formatNumber(analysis.mrb, 2))}
-              ${buildRow("MRN", formatNumber(analysis.mrn, 2))}
-              ${buildRow("TGA", Number.isFinite(analysis.tga) ? `${formatNumber(analysis.tga, 2)} %` : "-")}
+              ${buildRow("MRN (normalisé)", formatNumber(analysis.mrn, 2))}
+              ${buildRow("TGA (normalisé)", Number.isFinite(analysis.tga) ? `${formatNumber(analysis.tga, 2)} %` : "-")}
             </tbody>
           </table>
 
@@ -326,6 +346,9 @@
             Hypothèse SCHL v0 : vacance ${SCHL_DEFAULTS.vacancePct} %, gestion ${SCHL_DEFAULTS.gestionPct} %, entretien ${SCHL_DEFAULTS.entretienPct} %, remplacement ${SCHL_DEFAULTS.remplacementPct} % du revenu brut.
           </div>
         </div>
+        <div class="ca-footer">
+          <button class="ca-print" type="button">Imprimer</button>
+        </div>
       </div>
     `;
 
@@ -333,6 +356,7 @@
       state.open = false;
       renderVisibleState();
     });
+    root.querySelector(".ca-print")?.addEventListener("click", () => window.print());
 
     renderVisibleState();
   }
