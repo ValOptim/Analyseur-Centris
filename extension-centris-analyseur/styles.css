@@ -73,6 +73,16 @@
   font-variant-numeric: tabular-nums;
 }
 
+#centris-analyseur-root .ca-ineligible {
+  font-size: 13px;
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  border-radius: 4px;
+  padding: 12px;
+  line-height: 1.5;
+}
+
 #centris-analyseur-root .ca-note {
   font-size: 11px;
   color: #4b5563;

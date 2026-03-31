@@ -143,6 +143,35 @@
     };
   }
 
+  function parseUnitCount(text) {
+    if (!text) return null;
+    let total = 0;
+    let found = false;
+    const re = /\((\d+)\)/g;
+    let match;
+    while ((match = re.exec(text)) !== null) {
+      total += parseInt(match[1], 10);
+      found = true;
+    }
+    return found ? total : null;
+  }
+
+  function isResidentialOnly(usageText) {
+    const normalized = normalizeText(usageText);
+    return normalized === "residentielle";
+  }
+
+  function getEligibilityError(data) {
+    if (!isResidentialOnly(data.usageText)) {
+      return "Ce calculateur est conçu pour analyser seulement les immeubles résidentiels de 5 unités et plus.";
+    }
+    const unitCount = parseUnitCount(data.unitsText);
+    if (unitCount !== null && unitCount < 5) {
+      return "Ce calculateur est conçu pour analyser seulement les immeubles résidentiels de 5 unités et plus.";
+    }
+    return null;
+  }
+
   function computeAnalysis(data) {
     const gross = data.grossPotential;
     const price = data.askingPrice;
@@ -219,9 +248,31 @@
       return;
     }
 
-    const analysis = computeAnalysis(data);
     const toggle = document.getElementById(TOGGLE_ID);
     if (toggle) toggle.style.display = "block";
+
+    const eligibilityError = getEligibilityError(data);
+    if (eligibilityError) {
+      root.innerHTML = `
+        <div class="ca-panel">
+          <div class="ca-header">
+            <div class="ca-title">Analyse financière préliminaire</div>
+            <button class="ca-close" type="button" aria-label="Fermer">x</button>
+          </div>
+          <div class="ca-content">
+            <div class="ca-ineligible">${eligibilityError}</div>
+          </div>
+        </div>
+      `;
+      root.querySelector(".ca-close")?.addEventListener("click", () => {
+        state.open = false;
+        renderVisibleState();
+      });
+      renderVisibleState();
+      return;
+    }
+
+    const analysis = computeAnalysis(data);
 
     const sectionsHtml = data.financialSections
       .map((section) => `
@@ -243,7 +294,7 @@
         </div>
         <div class="ca-content">
           <table>
-            <thead><tr><th colspan="2">Resume</th></tr></thead>
+            <thead><tr><th colspan="2">Résumé</th></tr></thead>
             <tbody>
               ${buildRow("N° Centris", data.listingId)}
               ${buildRow("Type", data.title || "-")}
