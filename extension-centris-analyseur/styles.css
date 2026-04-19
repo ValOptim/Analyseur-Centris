@@ -82,6 +82,33 @@
 #centris-analyseur-root tr.row-total td {
   background: #f3f4f6;
   font-weight: 700;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+#centris-analyseur-root .ca-building-toggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+#centris-analyseur-root .ca-btn-building {
+  flex: 1;
+  padding: 5px 8px;
+  font-size: 12px;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  border: 1px solid #0f766e;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #0f766e;
+  cursor: pointer;
+}
+
+#centris-analyseur-root .ca-btn-building.active {
+  background: #0f766e;
+  color: #ffffff;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 #centris-analyseur-root .ca-ineligible {
@@ -94,12 +121,38 @@
   line-height: 1.5;
 }
 
-#centris-analyseur-root .ca-note {
+#centris-analyseur-root .ca-schl-reference {
+  margin-top: 4px;
+}
+
+#centris-analyseur-root .ca-schl-ref-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 6px;
+}
+
+#centris-analyseur-root .ca-schl-ref-note {
   font-size: 11px;
-  color: #4b5563;
-  background: #ecfeff;
-  border: 1px solid #a5f3fc;
-  padding: 8px;
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  border-radius: 4px;
+  padding: 6px 8px;
+  margin-bottom: 8px;
+}
+
+#centris-analyseur-root .ca-schl-reference table th,
+#centris-analyseur-root .ca-schl-reference table td {
+  font-size: 10px;
+  padding: 4px 5px;
+}
+
+#centris-analyseur-root .ca-schl-pupa-note {
+  font-size: 10px;
+  font-style: italic;
+  color: #6b7280;
+  margin: -8px 0 8px 0;
 }
 
 #centris-analyseur-toggle {

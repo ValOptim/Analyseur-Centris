@@ -9,15 +9,30 @@
   };
 
   const SCHL_DEFAULTS = {
-    vacancePct: 3,
-    gestionPct: 4,
-    entretienPct: 5,
-    remplacementPct: 4
+    vacancePct: 5, // max conservateur de la fourchette 2-5%
+    woodBrick: {
+      small: { // < 12 unités
+        maintenancePUPA: 610,
+        gestionPct: 4.25,
+        conciergeriesPUPA: 215
+      },
+      large: { // 12+ unités
+        maintenancePUPA: 610,
+        gestionPct: 5.0,
+        conciergeriesPUPA: 365
+      }
+    },
+    concrete: {
+      maintenancePUPA: 925,
+      gestionPct: 5.0,
+      conciergeriesPUPA: 610
+    }
   };
 
   let state = {
     open: true,
-    lastSignature: ""
+    lastSignature: "",
+    buildingType: "woodBrick" // "woodBrick" | "concrete"
   };
 
   function normalizeText(value) {
@@ -172,15 +187,29 @@
     return null;
   }
 
-  function computeAnalysis(data) {
-    const gross = data.grossPotential;
+  function computeAnalysis(data, buildingType) {
+    const gross = data.grossPotential; // RB
     const price = data.askingPrice;
     const taxes = data.taxes || 0;
     const expenses = data.operatingExpenses || 0;
+    const unitCount = parseUnitCount(data.unitsText) || 0;
 
-    const schlNorm = Number.isFinite(gross)
-      ? gross * (SCHL_DEFAULTS.vacancePct + SCHL_DEFAULTS.gestionPct + SCHL_DEFAULTS.entretienPct + SCHL_DEFAULTS.remplacementPct) / 100
-      : null;
+    let schlNorm = null;
+    let schlBreakdown = null;
+    if (Number.isFinite(gross) && unitCount > 0) {
+      const profile = buildingType === "concrete"
+        ? SCHL_DEFAULTS.concrete
+        : (unitCount < 12 ? SCHL_DEFAULTS.woodBrick.small : SCHL_DEFAULTS.woodBrick.large);
+
+      const vacance      = gross * SCHL_DEFAULTS.vacancePct / 100;
+      const rbe          = gross - vacance;
+      const gestion      = rbe * profile.gestionPct / 100;
+      const maintenance  = profile.maintenancePUPA * unitCount;
+      const conciergerie = profile.conciergeriesPUPA * unitCount;
+
+      schlNorm = vacance + gestion + maintenance + conciergerie;
+      schlBreakdown = { vacance, gestion, maintenance, conciergerie };
+    }
 
     const netIncome = Number.isFinite(gross)
       ? gross - taxes - expenses - (schlNorm || 0)
@@ -190,13 +219,7 @@
     const mrn = Number.isFinite(netIncome) && netIncome > 0 ? price / netIncome : null;
     const tga = Number.isFinite(netIncome) && price > 0 ? (netIncome / price) * 100 : null;
 
-    return {
-      schlNorm,
-      netIncome,
-      mrb,
-      mrn,
-      tga
-    };
+    return { schlNorm, schlBreakdown, netIncome, mrb, mrn, tga };
   }
 
   function ensureUI() {
@@ -276,7 +299,7 @@
       return;
     }
 
-    const analysis = computeAnalysis(data);
+    const analysis = computeAnalysis(data, state.buildingType);
     const unitCount = parseUnitCount(data.unitsText);
     const pricePerUnit = unitCount ? data.askingPrice / unitCount : null;
 
@@ -284,14 +307,22 @@
     const depensesSection = data.financialSections.find((s) => normalizeText(s.title).includes("depenses"));
     const otherSections = data.financialSections.filter((s) => s !== taxesSection && s !== depensesSection);
 
+    const normalizedRows = analysis.schlBreakdown ? [
+      { name: "Vacances et mauvaises créances (normalisée)", value: analysis.schlBreakdown.vacance },
+      { name: "Gestion et administration (normalisée)", value: analysis.schlBreakdown.gestion },
+      { name: "Entretien et réparations (normalisée)", value: analysis.schlBreakdown.maintenance },
+      { name: "Concierge / Salaire (normalisée)", value: analysis.schlBreakdown.conciergerie }
+    ] : [];
+
     const mergedDepenses = taxesSection || depensesSection
       ? {
           title: depensesSection?.title || taxesSection?.title,
           items: [
-            ...(taxesSection?.items || []).map((item) => ({ ...item, name: `Taxes ${item.name.toLowerCase()}` })),
-            ...(depensesSection?.items || [])
+            ...(taxesSection?.items || []).map((item) => ({ ...item, name: `Taxes ${item.name.toLowerCase()} (réelle)` })),
+            ...(depensesSection?.items || []).map((item) => ({ ...item, name: `${item.name} (réelle)` })),
+            ...normalizedRows
           ],
-          total: (taxesSection?.total ?? 0) + (depensesSection?.total ?? 0)
+          total: ((taxesSection?.total ?? 0) + (depensesSection?.total ?? 0)) + (analysis.schlNorm || 0)
         }
       : null;
 
@@ -327,9 +358,13 @@
               <!-- ${buildRow("Usage", data.usageText || "-")} -->
               ${buildRow("Nombre d'unités", unitCount ?? "-")}
               ${buildRow("Unités résidentielles", data.unitsResText || "-")}
-              ${buildRow("Revenus bruts potentiels", Number.isFinite(data.grossPotential) ? formatMoney(data.grossPotential) : "-")}
             </tbody>
           </table>
+
+          <div class="ca-building-toggle">
+            <button class="ca-btn-building ${state.buildingType === 'woodBrick' ? 'active' : ''}" data-type="woodBrick">Bois/brique</button>
+            <button class="ca-btn-building ${state.buildingType === 'concrete' ? 'active' : ''}" data-type="concrete">Béton</button>
+          </div>
 
           <table>
             <thead><tr><th colspan="2">Indicateurs</th></tr></thead>
@@ -340,10 +375,48 @@
             </tbody>
           </table>
 
+          <table>
+            <thead><tr><th colspan="2">Revenus</th></tr></thead>
+            <tbody>
+              ${buildRow("Revenus bruts potentiels", Number.isFinite(data.grossPotential) ? formatMoney(data.grossPotential) : "-")}
+              ${buildRow(`Vacances &amp; mauvaises créances (${SCHL_DEFAULTS.vacancePct} %)`, Number.isFinite(analysis.schlBreakdown?.vacance) ? formatMoney(-analysis.schlBreakdown.vacance) : "-")}
+              ${buildRow("Revenus bruts effectifs", Number.isFinite(analysis.schlBreakdown?.vacance) ? formatMoney(data.grossPotential - analysis.schlBreakdown.vacance) : "-")}
+              ${buildRow("Revenus nets normalisés", Number.isFinite(analysis.netIncome) ? formatMoney(analysis.netIncome) : "-", "row-total")}
+            </tbody>
+          </table>
+
           ${sectionsHtml}
 
-          <div class="ca-note">
-            Hypothèse SCHL v0 : vacance ${SCHL_DEFAULTS.vacancePct} %, gestion ${SCHL_DEFAULTS.gestionPct} %, entretien ${SCHL_DEFAULTS.entretienPct} %, remplacement ${SCHL_DEFAULTS.remplacementPct} % du revenu brut.
+          <div class="ca-schl-reference">
+            <div class="ca-schl-ref-title">Barèmes SCHL de référence</div>
+            <div class="ca-schl-ref-note">La section 2 (Réserve de remplacement) n'est pas incluse dans cette analyse préliminaire par manque d'information.</div>
+            <table>
+              <thead>
+                <tr><th colspan="4">1. Dépenses d'exploitation normalisées</th></tr>
+                <tr><th>Poste</th><th>BB &lt;12</th><th>BB 12+</th><th>Béton</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Vacances</td><td>2–5 % RB</td><td>2–5 % RB</td><td>2–5 % RB</td></tr>
+                <tr><td>Taxes foncières</td><td>Réelles</td><td>Réelles</td><td>Réelles</td></tr>
+                <tr><td>Assurance</td><td>Réelle</td><td>Réelle</td><td>Réelle</td></tr>
+                <tr><td>Électricité</td><td>Réelle</td><td>Réelle</td><td>Réelle</td></tr>
+                <tr><td>Entretien</td><td>610 $/PUPA*</td><td>610 $/PUPA*</td><td>925 $/PUPA*</td></tr>
+                <tr><td>Gestion</td><td>4,25 % RBE</td><td>5,0 % RBE</td><td>5,0 % RBE</td></tr>
+                <tr><td>Concierge</td><td>215 $/PUPA*</td><td>365 $/PUPA*</td><td>610 $/PUPA*</td></tr>
+              </tbody>
+            </table>
+            <div class="ca-schl-pupa-note">* PUPA : Par Unité Par Année</div>
+            <table>
+              <thead>
+                <tr><th colspan="3">2. Réserve de remplacement</th></tr>
+                <tr><th>Équipement</th><th>Montant</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Électroménager</td><td>60 $/app./an</td><td>Par appareil du propriétaire</td></tr>
+                <tr><td>Thermopompe / Clim.</td><td>190 $/unité/an</td><td>Par appareil fourni</td></tr>
+                <tr><td>Ascenseur</td><td>3 600 $/asc./an</td><td>300 $/mois</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
         <div class="ca-footer">
@@ -357,6 +430,12 @@
       renderVisibleState();
     });
     root.querySelector(".ca-print")?.addEventListener("click", () => window.print());
+    root.querySelectorAll(".ca-btn-building").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.buildingType = btn.dataset.type;
+        renderPanel(data);
+      });
+    });
 
     renderVisibleState();
   }

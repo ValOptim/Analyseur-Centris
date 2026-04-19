@@ -11,11 +11,12 @@ Ce document contient les normes de la Société canadienne d'hypothèques et de 
 | **Assurance** | Réelle | Réelle | Réelle |
 | **Électricité / Services publics** | Réelle | Réelle | Réelle |
 | **Entretiens et réparations** | 610$ / PUPA* | 610$ / PUPA* | 925$ / PUPA** |
-| **Gestion et administration** | 4.25% du RB | 5.0% du RB | 5.0% du RB |
+| **Gestion et administration** | 4.25% du RBE | 5.0% du RBE | 5.0% du RBE |
 | **Concierge / Salaire** | 215$ / PUPA | 365$ / PUPA | 610$ / PUPA |
 
 > **Lexique des variables :**
 > * **RB** : Revenu Brut (revenu brut de l'immeuble avant vacance).
+> * **RBE** : Revenu Brut Effectif = RB − Vacances et mauvaises créances.
 > * **PUPA** : Par Unité Par Année (montant applicable par logement).
 > * **Réelles** : utiliser les dépenses réelles fournies dans les états financiers de l'immeuble.
 
