@@ -1,8 +1,9 @@
-﻿{
+{
   "manifest_version": 3,
   "name": "Analyseur Centris",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Analyse financiere preliminaire des immeubles sur Centris.",
+  "permissions": ["storage"],
   "content_scripts": [
     {
       "matches": ["https://www.centris.ca/*"],
@@ -11,5 +12,8 @@
       "run_at": "document_idle"
     }
   ],
-  "host_permissions": ["https://www.centris.ca/*"]
+  "host_permissions": [
+    "https://www.centris.ca/*",
+    "https://valoptim.github.io/*"
+  ]
 }

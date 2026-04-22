@@ -204,10 +204,116 @@ body.ca-panel-open {
   font-family: "Segoe UI", Tahoma, sans-serif;
   font-weight: 600;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+#centris-analyseur-root .ca-print-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
 }
 
 #centris-analyseur-root .ca-print:hover {
   background: #0d6460;
+}
+
+#centris-analyseur-root .ca-marketing {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  color: #6b7280;
+  text-align: center;
+  line-height: 1.5;
+}
+
+#centris-analyseur-root .ca-marketing a {
+  color: #0f766e;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#centris-analyseur-root .ca-marketing a:hover {
+  text-decoration: underline;
+}
+
+#centris-analyseur-root .ca-marketing-feedback {
+  margin-top: 2px;
+  font-size: 10px;
+}
+
+#centris-analyseur-root .ca-version {
+  font-size: 10px;
+  color: #9ca3af;
+  text-align: center;
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+#centris-analyseur-root .ca-banner {
+  font-size: 12px;
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+#centris-analyseur-root .ca-banner a {
+  font-weight: 600;
+}
+
+#centris-analyseur-root .ca-banner-update {
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  color: #92400e;
+}
+
+#centris-analyseur-root .ca-banner-message {
+  background: #dbeafe;
+  border: 1px solid #3b82f6;
+  color: #1e40af;
+}
+
+#centris-analyseur-root .ca-banner-message a,
+#centris-analyseur-root .ca-banner-update a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+#centris-analyseur-root .ca-blocked {
+  background: #fee2e2;
+  border: 1px solid #ef4444;
+  border-radius: 4px;
+  padding: 16px;
+  text-align: center;
+}
+
+#centris-analyseur-root .ca-blocked-message {
+  font-size: 13px;
+  color: #991b1b;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+#centris-analyseur-root .ca-blocked-btn {
+  display: inline-block;
+  padding: 8px 14px;
+  background: #0f766e;
+  color: #ffffff;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#centris-analyseur-root .ca-blocked-btn:hover {
+  background: #0d6460;
+  text-decoration: none;
 }
 
 @media print {

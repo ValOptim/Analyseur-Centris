@@ -8,6 +8,11 @@
     usage: ["utilisation de la propriete"]
   };
 
+  const REMOTE_CONFIG_URL = "https://valoptim.github.io/Analyseur-Centris/remote-config.json";
+  const CACHE_KEY = "remoteConfig";
+  const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 heures
+  const FETCH_TIMEOUT_MS = 5000;
+
   const SCHL_DEFAULTS = {
     vacancePct: 5, // max conservateur de la fourchette 2-5%
     woodBrick: {
@@ -32,8 +37,33 @@
   let state = {
     open: true,
     lastSignature: "",
-    buildingType: "woodBrick" // "woodBrick" | "concrete"
+    buildingType: "woodBrick", // "woodBrick" | "concrete"
+    remoteConfig: null,
+    remoteConfigLoaded: false
   };
+
+  const MARKETING_HTML = `
+    <div class="ca-marketing">
+      <div class="ca-marketing-credit">
+        Développé par <a href="https://linkedin.com/in/felixhini" target="_blank" rel="noopener">Félix Hini</a>
+        @ <a href="https://valoptim.agency/" target="_blank" rel="noopener">ValOptim</a>
+      </div>
+      <div class="ca-marketing-feedback">
+        <a href="mailto:felix@valoptim.agency?subject=Feedback%20Analyseur%20Centris">Feedback ou questions&nbsp;?</a>
+      </div>
+    </div>
+  `;
+
+  const PRINT_BUTTON_HTML = `
+    <button class="ca-print" type="button">
+      <svg class="ca-print-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+        <rect x="6" y="14" width="12" height="8"></rect>
+      </svg>
+      <span>Imprimer</span>
+    </button>
+  `;
 
   function normalizeText(value) {
     return (value || "")
@@ -222,6 +252,127 @@
     return { schlNorm, schlBreakdown, netIncome, mrb, mrn, tga };
   }
 
+  function getCurrentVersion() {
+    try {
+      return chrome.runtime.getManifest().version;
+    } catch (e) {
+      return "?";
+    }
+  }
+
+  function compareVersions(a, b) {
+    const pa = String(a || "0").split(".").map((n) => parseInt(n, 10) || 0);
+    const pb = String(b || "0").split(".").map((n) => parseInt(n, 10) || 0);
+    const len = Math.max(pa.length, pb.length);
+    for (let i = 0; i < len; i++) {
+      const da = pa[i] || 0;
+      const db = pb[i] || 0;
+      if (da > db) return 1;
+      if (da < db) return -1;
+    }
+    return 0;
+  }
+
+  function readCache() {
+    return new Promise((resolve) => {
+      try {
+        chrome.storage.local.get(CACHE_KEY, (result) => {
+          resolve((result && result[CACHE_KEY]) || null);
+        });
+      } catch (e) {
+        resolve(null);
+      }
+    });
+  }
+
+  function writeCache(config) {
+    try {
+      chrome.storage.local.set({ [CACHE_KEY]: { config, timestamp: Date.now() } });
+    } catch (e) {
+      // silencieux
+    }
+  }
+
+  async function fetchRemoteConfig() {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    try {
+      const response = await fetch(REMOTE_CONFIG_URL, { cache: "no-store", signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (!response.ok) return null;
+      return await response.json();
+    } catch (e) {
+      clearTimeout(timeoutId);
+      return null;
+    }
+  }
+
+  async function loadRemoteConfig() {
+    const cached = await readCache();
+    const fresh = cached && (Date.now() - cached.timestamp) < CACHE_TTL_MS;
+
+    if (fresh && cached.config) {
+      state.remoteConfig = cached.config;
+      state.remoteConfigLoaded = true;
+      // Refresh silencieux en arrière-plan
+      fetchRemoteConfig().then((config) => { if (config) writeCache(config); });
+      return;
+    }
+
+    const config = await fetchRemoteConfig();
+    if (config) {
+      state.remoteConfig = config;
+      writeCache(config);
+    } else if (cached && cached.config) {
+      state.remoteConfig = cached.config; // fallback sur cache périmé
+    } else {
+      state.remoteConfig = null; // fail-open
+    }
+    state.remoteConfigLoaded = true;
+  }
+
+  function buildVersionFooter() {
+    return `<div class="ca-version">v${getCurrentVersion()}</div>`;
+  }
+
+  function buildBannersHtml(config, currentVersion) {
+    const banners = [];
+    if (config && config.message) {
+      banners.push(`<div class="ca-banner ca-banner-message">${config.message}</div>`);
+    }
+    if (config && config.latestVersion && compareVersions(currentVersion, config.latestVersion) < 0) {
+      const link = config.downloadUrl
+        ? ` <a href="${config.downloadUrl}" target="_blank" rel="noopener">Télécharger</a>`
+        : "";
+      banners.push(`<div class="ca-banner ca-banner-update">Nouvelle version disponible (v${config.latestVersion}).${link}</div>`);
+    }
+    return banners.join("");
+  }
+
+  function renderBlockedPanel(message, downloadUrl) {
+    const downloadBtn = downloadUrl
+      ? `<a class="ca-blocked-btn" href="${downloadUrl}" target="_blank" rel="noopener">Télécharger la mise à jour</a>`
+      : "";
+    return `
+      <div class="ca-panel">
+        <div class="ca-header">
+          <div class="ca-title">Analyse financière préliminaire</div>
+          <button class="ca-close" type="button" aria-label="Fermer">x</button>
+        </div>
+        <div class="ca-content">
+          ${MARKETING_HTML}
+          <div class="ca-blocked">
+            <div class="ca-blocked-message">${message}</div>
+            ${downloadBtn}
+          </div>
+        </div>
+        <div class="ca-footer">
+          ${buildVersionFooter()}
+        </div>
+      </div>
+    `;
+  }
+
   function ensureUI() {
     let root = document.getElementById(ROOT_ID);
     if (!root) {
@@ -274,6 +425,37 @@
     const toggle = document.getElementById(TOGGLE_ID);
     if (toggle) toggle.style.display = "block";
 
+    const config = state.remoteConfig;
+    const currentVersion = getCurrentVersion();
+
+    if (config && config.killSwitch === true) {
+      root.innerHTML = renderBlockedPanel(
+        config.killMessage || "L'extension est temporairement indisponible.",
+        config.downloadUrl
+      );
+      root.querySelector(".ca-close")?.addEventListener("click", () => {
+        state.open = false;
+        renderVisibleState();
+      });
+      renderVisibleState();
+      return;
+    }
+
+    if (config && config.minVersion && compareVersions(currentVersion, config.minVersion) < 0) {
+      root.innerHTML = renderBlockedPanel(
+        `Une mise à jour est requise (version minimale : v${config.minVersion}). Vous utilisez la version v${currentVersion}.`,
+        config.downloadUrl
+      );
+      root.querySelector(".ca-close")?.addEventListener("click", () => {
+        state.open = false;
+        renderVisibleState();
+      });
+      renderVisibleState();
+      return;
+    }
+
+    const bannersHtml = buildBannersHtml(config, currentVersion);
+
     const eligibilityError = getEligibilityError(data);
     if (eligibilityError) {
       root.innerHTML = `
@@ -283,10 +465,13 @@
             <button class="ca-close" type="button" aria-label="Fermer">x</button>
           </div>
           <div class="ca-content">
+            ${bannersHtml}
+            ${MARKETING_HTML}
             <div class="ca-ineligible">${eligibilityError}</div>
           </div>
           <div class="ca-footer">
-            <button class="ca-print" type="button">Imprimer</button>
+            ${PRINT_BUTTON_HTML}
+            ${buildVersionFooter()}
           </div>
         </div>
       `;
@@ -347,6 +532,8 @@
           <button class="ca-close" type="button" aria-label="Fermer">x</button>
         </div>
         <div class="ca-content">
+          ${bannersHtml}
+          ${MARKETING_HTML}
           <table>
             <thead><tr><th colspan="2">Résumé</th></tr></thead>
             <tbody>
@@ -420,7 +607,8 @@
           </div>
         </div>
         <div class="ca-footer">
-          <button class="ca-print" type="button">Imprimer</button>
+          ${PRINT_BUTTON_HTML}
+          ${buildVersionFooter()}
         </div>
       </div>
     `;
@@ -442,12 +630,16 @@
 
   function createSignature(data) {
     if (!data) return "";
+    const configSig = state.remoteConfig
+      ? `${state.remoteConfig.killSwitch ? 1 : 0}:${state.remoteConfig.minVersion || ""}:${state.remoteConfig.latestVersion || ""}:${state.remoteConfig.message || ""}`
+      : "no-config";
     return [
       data.listingId,
       data.askingPrice,
       data.grossPotential,
       data.taxes,
-      data.operatingExpenses
+      data.operatingExpenses,
+      configSig
     ].join("|");
   }
 
@@ -494,4 +686,8 @@
   };
 
   refresh();
+
+  loadRemoteConfig().then(() => {
+    refresh();
+  });
 })();
