@@ -2,6 +2,11 @@
 
 Toutes les modifications notables de l'Analyseur Centris sont documentées ici.
 
+## [0.2.2] — 2026-04-26
+
+### Modifié
+- Lien de contact dans le bloc marketing reformulé : "Questions, feedback ou développement sur mesure ?"
+
 ## [0.2.1] — 2026-04-25
 
 ### Corrigé

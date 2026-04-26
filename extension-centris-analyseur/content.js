@@ -49,7 +49,7 @@
         @ <a href="https://valoptim.agency/" target="_blank" rel="noopener">ValOptim</a>
       </div>
       <div class="ca-marketing-feedback">
-        <a href="mailto:felix@valoptim.agency?subject=Feedback%20Analyseur%20Centris">Feedback ou questions&nbsp;?</a>
+        <a href="mailto:felix@valoptim.agency?subject=Feedback%20Analyseur%20Centris">Questions, feedback ou développement sur mesure&nbsp;?</a>
       </div>
     </div>
   `;
