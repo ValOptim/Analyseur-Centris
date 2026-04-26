@@ -55,6 +55,15 @@ Au démarrage, `loadRemoteConfig()` est appelé en parallèle. Quand il termine,
 
 Les constantes SCHL sont dans `SCHL_DEFAULTS` au début de `content.js`.
 
+## Gestion des versions
+
+À chaque modification du code, même mineure, il faut :
+
+1. Incrémenter le numéro de version dans `extension-centris-analyseur/manifest.json` (patch : `0.2.0` → `0.2.1`)
+2. Ajouter une entrée dans `CHANGELOG.md` décrivant la modification
+
+La version est lue dynamiquement via `chrome.runtime.getManifest().version` — il suffit de la mettre à jour dans `manifest.json`.
+
 ## Conventions de code
 
 - **Noms de fonctions/variables** : anglais, camelCase

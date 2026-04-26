@@ -1,0 +1,420 @@
+{
+  "name": "Analyseur Centris — Distribution automatique",
+  "nodes": [
+    {
+      "id": "wh-github",
+      "name": "Webhook GitHub Push",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 100],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "centris-release",
+        "responseMode": "onReceived",
+        "responseData": "allEntries",
+        "options": {}
+      },
+      "notes": "Configurer sur GitHub : Settings > Webhooks > Add webhook\nPayload URL : https://VOTRE-N8N.com/webhook/centris-release\nContent type : application/json\nEvents : Just the push event"
+    },
+    {
+      "id": "manual-trig",
+      "name": "Déclenchement Manuel",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 300],
+      "parameters": {},
+      "notes": "Cliquer 'Execute workflow' dans l'UI n8n pour forcer une release sans push GitHub"
+    },
+    {
+      "id": "if-main",
+      "name": "IF: Branche main?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [300, 100],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-main",
+              "leftValue": "={{ $json.body?.ref || $json.ref || '' }}",
+              "rightValue": "refs/heads/main",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "notes": "Filtre les pushs hors branche main (ex: feature branches)"
+    },
+    {
+      "id": "get-manifest",
+      "name": "HTTP: GET manifest.json",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [600, 200],
+      "parameters": {
+        "method": "GET",
+        "url": "https://raw.githubusercontent.com/ValOptim/Analyseur-Centris/main/extension-centris-analyseur/manifest.json",
+        "options": {}
+      },
+      "notes": "Lit la version actuelle depuis manifest.json sur la branche main"
+    },
+    {
+      "id": "check-release",
+      "name": "HTTP: Vérifier Release Existante",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 200],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.github.com/repos/ValOptim/Analyseur-Centris/releases/tags/v{{ $json.version }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/vnd.github+json" },
+            { "name": "X-GitHub-Api-Version", "value": "2022-11-28" }
+          ]
+        },
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "PLACEHOLDER_GITHUB_PAT",
+          "name": "GitHub PAT"
+        }
+      },
+      "notes": "Retourne 404 si la release n'existe pas encore — Continue On Fail activé"
+    },
+    {
+      "id": "if-exists",
+      "name": "IF: Release Existante?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1200, 200],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-exists",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "notes": "TRUE → release existe déjà (mettre à jour l'asset)\nFALSE → nouvelle release à créer"
+    },
+    {
+      "id": "get-asset-id",
+      "name": "Code: Extraire Asset ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1500, 0],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// La release existe déjà — extraire l'ID de l'asset zip s'il existe\nconst release = $input.first().json;\nconst assets = release.assets || [];\nconst zipAsset = assets.find(a => a.name === 'analyseur-centris.zip');\n\nreturn [{\n  json: {\n    asset_id: zipAsset ? zipAsset.id : null,\n    upload_url: release.upload_url,\n    has_asset: !!zipAsset,\n  }\n}];"
+      }
+    },
+    {
+      "id": "delete-asset",
+      "name": "HTTP: Supprimer Ancien Asset",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1800, 0],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://api.github.com/repos/ValOptim/Analyseur-Centris/releases/assets/{{ $json.asset_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/vnd.github+json" },
+            { "name": "X-GitHub-Api-Version", "value": "2022-11-28" }
+          ]
+        },
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "PLACEHOLDER_GITHUB_PAT",
+          "name": "GitHub PAT"
+        }
+      },
+      "notes": "Supprime l'ancien ZIP avant d'uploader le nouveau. Ignoré si asset_id est null."
+    },
+    {
+      "id": "set-url-existing",
+      "name": "Set: upload_url (release existante)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [2100, 0],
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "asgn-url",
+              "name": "upload_url",
+              "value": "={{ $node[\"Code: Extraire Asset ID\"].json.upload_url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "notes": "Normalise la sortie pour que Code: Construire le ZIP trouve upload_url dans $json"
+    },
+    {
+      "id": "create-release",
+      "name": "HTTP: Créer Release GitHub",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1500, 400],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.github.com/repos/ValOptim/Analyseur-Centris/releases",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({\n  tag_name: 'v' + $node['HTTP: GET manifest.json'].json.version,\n  target_commitish: 'main',\n  name: 'Analyseur Centris v' + $node['HTTP: GET manifest.json'].json.version,\n  body: 'Publication automatique.',\n  draft: false,\n  prerelease: false\n}) }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/vnd.github+json" },
+            { "name": "X-GitHub-Api-Version", "value": "2022-11-28" }
+          ]
+        },
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "PLACEHOLDER_GITHUB_PAT",
+          "name": "GitHub PAT"
+        }
+      },
+      "notes": "La réponse contient upload_url qui sera lu par Code: Construire le ZIP via $json.upload_url"
+    },
+    {
+      "id": "build-zip",
+      "name": "Code: Construire le ZIP",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2400, 200],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Télécharge les 3 fichiers de l'extension depuis GitHub et crée un ZIP\nconst JSZip = require('jszip');\n\nconst baseUrl = 'https://raw.githubusercontent.com/ValOptim/Analyseur-Centris/main/extension-centris-analyseur/';\nconst filenames = ['manifest.json', 'content.js', 'styles.css'];\n\nconst zip = new JSZip();\nconst folder = zip.folder('extension-centris-analyseur');\n\nfor (const filename of filenames) {\n  const res = await fetch(baseUrl + filename);\n  if (!res.ok) throw new Error('Impossible de télécharger ' + filename + ': ' + res.status);\n  folder.file(filename, Buffer.from(await res.arrayBuffer()));\n}\n\nconst zipBuffer = await zip.generateAsync({\n  type: 'nodebuffer',\n  compression: 'DEFLATE',\n  compressionOptions: { level: 6 }\n});\n\n// upload_url vient de $json (Set node branche TRUE ou Create Release branche FALSE)\nconst upload_url = $json.upload_url;\nconst version = $node['HTTP: GET manifest.json'].json.version;\n\nreturn [{\n  json: {\n    upload_url: upload_url,\n    version: version,\n    tagName: 'v' + version,\n  },\n  binary: {\n    zipFile: {\n      data: zipBuffer.toString('base64'),\n      mimeType: 'application/zip',\n      fileName: 'analyseur-centris.zip',\n      fileSize: zipBuffer.length,\n    }\n  }\n}];"
+      },
+      "notes": "Reçoit l'upload_url des deux branches (release existante ou nouvelle). Produit le ZIP en binaire."
+    },
+    {
+      "id": "upload-zip",
+      "name": "HTTP: Uploader le ZIP",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2700, 200],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.upload_url.split('{')[0] }}?name=analyseur-centris.zip",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "zipFile",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/zip" },
+            { "name": "Accept", "value": "application/vnd.github+json" },
+            { "name": "X-GitHub-Api-Version", "value": "2022-11-28" }
+          ]
+        },
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "PLACEHOLDER_GITHUB_PAT",
+          "name": "GitHub PAT"
+        }
+      },
+      "notes": "Upload le ZIP sur la release GitHub. URL disponible après via releases/latest/download/analyseur-centris.zip"
+    },
+    {
+      "id": "get-rc",
+      "name": "HTTP: GET remote-config.json",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3000, 200],
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.github.com/repos/ValOptim/Analyseur-Centris/contents/docs/remote-config.json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/vnd.github+json" },
+            { "name": "X-GitHub-Api-Version", "value": "2022-11-28" }
+          ]
+        },
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "PLACEHOLDER_GITHUB_PAT",
+          "name": "GitHub PAT"
+        }
+      },
+      "notes": "Lit le SHA actuel du fichier (requis par l'API GitHub pour les mises à jour)"
+    },
+    {
+      "id": "build-rc",
+      "name": "Code: Préparer remote-config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3300, 200],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Met à jour uniquement latestVersion — downloadUrl reste inchangée\nconst item = $input.first().json;\nconst sha = item.sha;\n\n// Le contenu de l'API GitHub est en base64 avec des sauts de ligne\nconst decoded = Buffer.from(item.content.replace(/\\n/g, ''), 'base64').toString('utf8');\nconst config = JSON.parse(decoded);\n\nconst version = $node['Code: Construire le ZIP'].json.version;\nconfig.latestVersion = version;\n\n// Re-encoder en base64 pour l'API GitHub\nconst newContent = Buffer.from(JSON.stringify(config, null, 2) + '\\n').toString('base64');\n\nreturn [{\n  json: {\n    sha: sha,\n    content: newContent,\n    version: version,\n    commitMessage: 'chore: latestVersion → v' + version + ' [skip ci]',\n  }\n}];"
+      },
+      "notes": "downloadUrl n'est PAS modifiée — elle pointe déjà vers releases/latest/download/analyseur-centris.zip"
+    },
+    {
+      "id": "put-rc",
+      "name": "HTTP: Mettre à jour remote-config",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3600, 200],
+      "parameters": {
+        "method": "PUT",
+        "url": "https://api.github.com/repos/ValOptim/Analyseur-Centris/contents/docs/remote-config.json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ message: $json.commitMessage, content: $json.content, sha: $json.sha }) }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/vnd.github+json" },
+            { "name": "X-GitHub-Api-Version", "value": "2022-11-28" }
+          ]
+        },
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "PLACEHOLDER_GITHUB_PAT",
+          "name": "GitHub PAT"
+        }
+      },
+      "notes": "Commit le remote-config.json mis à jour. Les utilisateurs voient la bannière de MAJ sous 6h."
+    }
+  ],
+  "connections": {
+    "Webhook GitHub Push": {
+      "main": [
+        [{ "node": "IF: Branche main?", "type": "main", "index": 0 }]
+      ]
+    },
+    "IF: Branche main?": {
+      "main": [
+        [{ "node": "HTTP: GET manifest.json", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Déclenchement Manuel": {
+      "main": [
+        [{ "node": "HTTP: GET manifest.json", "type": "main", "index": 0 }]
+      ]
+    },
+    "HTTP: GET manifest.json": {
+      "main": [
+        [{ "node": "HTTP: Vérifier Release Existante", "type": "main", "index": 0 }]
+      ]
+    },
+    "HTTP: Vérifier Release Existante": {
+      "main": [
+        [{ "node": "IF: Release Existante?", "type": "main", "index": 0 }]
+      ]
+    },
+    "IF: Release Existante?": {
+      "main": [
+        [{ "node": "Code: Extraire Asset ID", "type": "main", "index": 0 }],
+        [{ "node": "HTTP: Créer Release GitHub", "type": "main", "index": 0 }]
+      ]
+    },
+    "Code: Extraire Asset ID": {
+      "main": [
+        [{ "node": "HTTP: Supprimer Ancien Asset", "type": "main", "index": 0 }]
+      ]
+    },
+    "HTTP: Supprimer Ancien Asset": {
+      "main": [
+        [{ "node": "Set: upload_url (release existante)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Set: upload_url (release existante)": {
+      "main": [
+        [{ "node": "Code: Construire le ZIP", "type": "main", "index": 0 }]
+      ]
+    },
+    "HTTP: Créer Release GitHub": {
+      "main": [
+        [{ "node": "Code: Construire le ZIP", "type": "main", "index": 0 }]
+      ]
+    },
+    "Code: Construire le ZIP": {
+      "main": [
+        [{ "node": "HTTP: Uploader le ZIP", "type": "main", "index": 0 }]
+      ]
+    },
+    "HTTP: Uploader le ZIP": {
+      "main": [
+        [{ "node": "HTTP: GET remote-config.json", "type": "main", "index": 0 }]
+      ]
+    },
+    "HTTP: GET remote-config.json": {
+      "main": [
+        [{ "node": "Code: Préparer remote-config", "type": "main", "index": 0 }]
+      ]
+    },
+    "Code: Préparer remote-config": {
+      "main": [
+        [{ "node": "HTTP: Mettre à jour remote-config", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "instanceId": "",
+    "templateCredsSetupCompleted": false
+  }
+}

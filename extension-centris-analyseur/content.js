@@ -501,7 +501,7 @@
 
     const mergedDepenses = taxesSection || depensesSection
       ? {
-          title: depensesSection?.title || taxesSection?.title,
+          title: "Dépenses",
           items: [
             ...(taxesSection?.items || []).map((item) => ({ ...item, name: `Taxes ${item.name.toLowerCase()} (réelle)` })),
             ...(depensesSection?.items || []).map((item) => ({ ...item, name: `${item.name} (réelle)` })),

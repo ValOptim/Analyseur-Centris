@@ -2,6 +2,11 @@
 
 Toutes les modifications notables de l'Analyseur Centris sont documentées ici.
 
+## [0.2.1] — 2026-04-25
+
+### Corrigé
+- La section des dépenses calculées affichait toujours le titre "Dépenses", même lorsque seule la section "Taxes" était présente sur le listing. Le titre est maintenant fixe ("Dépenses") dans `renderPanel()`.
+
 ## [0.2.0] — 2026-04-22
 
 ### Ajouté
