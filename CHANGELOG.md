@@ -2,6 +2,11 @@
 
 Toutes les modifications notables de l'Analyseur Centris sont documentées ici.
 
+## [0.2.3] — 2026-04-26
+
+### Modifié
+- Titre du panneau renommé : "Analyse financière préliminaire" → "Analyseur préliminaire Centris"
+
 ## [0.2.2] — 2026-04-26
 
 ### Modifié

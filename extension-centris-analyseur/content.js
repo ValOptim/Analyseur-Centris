@@ -356,7 +356,7 @@
     return `
       <div class="ca-panel">
         <div class="ca-header">
-          <div class="ca-title">Analyse financière préliminaire</div>
+          <div class="ca-title">Analyseur préliminaire Centris</div>
           <button class="ca-close" type="button" aria-label="Fermer">x</button>
         </div>
         <div class="ca-content">
@@ -461,7 +461,7 @@
       root.innerHTML = `
         <div class="ca-panel">
           <div class="ca-header">
-            <div class="ca-title">Analyse financière préliminaire</div>
+            <div class="ca-title">Analyseur préliminaire Centris</div>
             <button class="ca-close" type="button" aria-label="Fermer">x</button>
           </div>
           <div class="ca-content">
@@ -528,7 +528,7 @@
     root.innerHTML = `
       <div class="ca-panel">
         <div class="ca-header">
-          <div class="ca-title">Analyse financière préliminaire</div>
+          <div class="ca-title">Analyseur préliminaire Centris</div>
           <button class="ca-close" type="button" aria-label="Fermer">x</button>
         </div>
         <div class="ca-content">
